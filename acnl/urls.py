@@ -13,9 +13,28 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls import patterns
+from django.conf.urls import include
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.http import Http404
+from sitemap import ViewSitemap, UnitSitemap, EncSitemap
+
+sitemaps = {'views': ViewSitemap,
+            'encyclopedia':EncSitemap,
+            'units': UnitSitemap,}
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', 'encyclopedia.views.last', name='last'),
+    url(r'^encyclopedia/$', 'encyclopedia.views.index', name='index'),
+    url(r'^available/$', 'encyclopedia.views.monthly', name='monthly'),
+    url(r'^encyclopedia/(?P<unit_id>\d+)/$', 'encyclopedia.views.unit', name='unit'),
+    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
