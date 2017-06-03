@@ -7,3 +7,8 @@ class UnitSerializer(serializers.ModelSerializer):
         model = Unit
         fields = (  'section','pos','pic','name','rarity', 'desc','loc',
                 'island','shadow','price','months','str_time','end_time')
+
+class UnitsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Unit
+        fields = (  'section','pos','pic','name','rarity')
