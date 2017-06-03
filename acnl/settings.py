@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'encyclopedia',
 ]
 
@@ -130,3 +131,10 @@ STATIC_ROOT = STAT_ROOT
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = MEDI_DIR
+
+REST_FRAMEWORK = {
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.AllowAny',
+            ],
+        'PAGE_SIZE': 10
+}
