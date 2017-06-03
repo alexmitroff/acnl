@@ -14,14 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import patterns
 from django.conf.urls import include
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.sitemaps.views import sitemap
 from django.http import Http404
-from sitemap import ViewSitemap, UnitSitemap, EncSitemap
+from .sitemap import ViewSitemap
+from .sitemap import UnitSitemap
+from .sitemap import EncSitemap
+
+from encyclopedia.views import *
 
 sitemaps = {'views': ViewSitemap,
             'encyclopedia':EncSitemap,
@@ -29,11 +33,11 @@ sitemaps = {'views': ViewSitemap,
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', 'encyclopedia.views.last', name='last'),
-    url(r'^encyclopedia/$', 'encyclopedia.views.index', name='index'),
-    url(r'^available/$', 'encyclopedia.views.monthly', name='monthly'),
-    url(r'^encyclopedia/(?P<unit_id>\d+)/$', 'encyclopedia.views.unit', name='unit'),
-    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^$', last, name='last'),
+    url(r'^encyclopedia/$', index, name='index'),
+    url(r'^available/$', monthly, name='monthly'),
+    url(r'^encyclopedia/(?P<unit_id>\d+)/$', unit, name='unit'),
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

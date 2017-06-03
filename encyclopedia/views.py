@@ -16,15 +16,10 @@ def get_month():
 	
 def last_month(unit):
 	now	= Month.objects.get(name=get_month())
-	#~ print now.name
 	position = now.pos+1
-	#~ print position
 	if position > 12:
 		position = 1
-	#~ print position	
 	neo = Month.objects.get(pos = position)
-	#~ print neo
-	#~ print neo.name
 	months = unit.months.all().order_by('pos')
 	if now in months:
 		if neo not in months:
@@ -39,9 +34,7 @@ def first_month(unit):
 	neo_pos = now.pos-1
 	if neo_pos < 1:
 		neo_pos = 12
-	#print now.name
 	neo = Month.objects.get(pos = neo_pos)
-	#print neo.name
 	months = unit.months.all().order_by('pos')
 	if now in months:
 		if neo not in months:
@@ -62,9 +55,7 @@ def last_list(sections):
 				l = last_month(unit)
 				if l == 2:
 					u_list.append(unit)
-					print u_list
 		l_list.append(u_list)
-		print l_list		
 	return l_list					
 
 
@@ -86,7 +77,6 @@ def new_list(sections):
 		u_list.append(n_list)			
 		u_list.append(o_list)			
 		l_list.append(u_list)
-		print l_list		
 	return l_list					
 
 def index(request):
@@ -105,10 +95,8 @@ def unit(request, unit_id):
 	sect = unit.section
 	try:
 		u_next = Unit.objects.filter(section = sect).filter(id__gt=unit.id).order_by('id')[:1].get()
-		print u_next
 	except:
 		u_next = None
-		print u_next
 	try:
 		u_prev = Unit.objects.filter(section = sect).filter(id__lt=unit.id).order_by('-id')[:1].get()
 	except:

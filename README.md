@@ -1,5 +1,5 @@
 <h1>Animal Crossing New Leaf Encyclopedia</h1>
-<p>This is simple django project which I use for learnin markup, caching, REST & etc.</p>
+<p>This is simple django project which I use for learning markup, caching, REST & etc.</p>
 
 <h2>Requirements</h2>
 <ul>
