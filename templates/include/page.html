@@ -1,0 +1,13 @@
+{% extends "include/base.html" %}
+{% block title %}{% endblock %}
+{% block meta %}{% endblock %}
+{% block page %}
+			<div id="logo" class="row"><a href="{% url 'index' %}"></a></div>
+			<div class="row">
+			{% include "include/menu.html" %}
+			</div>
+			<div class="row">				
+				{% block content %}{% endblock %}				
+			</div>			
+{% endblock %}
+{% block script %}{% endblock %}
