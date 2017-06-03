@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from django.shortcuts import render_to_response
 #~ from django.http import Http404
 #~ from django.http import HttpResponseRedirect
 #~ from django.core.context_processors import csrf
 from django.template import RequestContext
-from encyclopedia.models import Section, Unit, Month
+from encyclopedia.models import *
 import datetime
 
 # Create your views here.
@@ -86,8 +85,7 @@ def index(request):
 	var = {'sections': sections,
 			'mon':month,}
 	request_context = RequestContext(request)
-	response = render_to_response(template_url, var, context_instance=request_context)
-	return response
+	return render(request, template_url, var)
 
 def unit(request, unit_id):
 	template_url = 'pages/unit.html'
@@ -113,8 +111,7 @@ def unit(request, unit_id):
 			'mon':month,
 			'last':last}
 	request_context = RequestContext(request)
-	response = render_to_response(template_url, var, context_instance=request_context)
-	return response
+	return render(request, template_url, var)
 	
 def last(request):
 	template_url = 'pages/last.html'
@@ -130,8 +127,7 @@ def last(request):
 			'deep': deep,
 			'mon':month,}
 	request_context = RequestContext(request)
-	response = render_to_response(template_url, var, context_instance=request_context)
-	return response
+	return render(request, template_url, var)
 	
 def monthly(request):
 	template_url = 'pages/monthly.html'
@@ -151,6 +147,4 @@ def monthly(request):
 			'sections': sections,
 			'mon':month,}
 	request_context = RequestContext(request)
-	response = render_to_response(template_url, var, context_instance=request_context)
-	return response
-			
+	return render(request, template_url, var)			
