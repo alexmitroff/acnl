@@ -40,7 +40,7 @@ class Naturalist:
         unit_dict = {}
         for section in self.sections:
             units = Unit.objects.filter(section__name=section, months__name=self.month.name)\
-                .exclude(months__name=query_month.name).values('id', 'name', 'pic')
+                .exclude(months__name=query_month.name).order_by('pos').values('id', 'name', 'pic', 'rarity')
             unit_dict[section] = units
         return unit_dict
 
@@ -56,7 +56,7 @@ class Naturalist:
     def all_creatures(self):
         unit_dict = {}
         for section in self.sections:
-            units = Unit.objects.filter(section__name=section).values('id', 'name', 'pic')
+            units = Unit.objects.filter(section__name=section).order_by('pos').values('id', 'name', 'pic', 'rarity')
             unit_dict[section] = units
         return unit_dict
 
