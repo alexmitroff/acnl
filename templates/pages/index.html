@@ -1,60 +1,14 @@
-{% extends "include/page.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 {% block title %} Encyclopedia |{% endblock %}
-{% block meta %}
-<meta name="title" content="New Leaf encyclopedia.">
-<meta name="description" content="All collectable creatures in the correct order.">
-<meta property="og:title" content="New Leaf encyclopedia.">
-<meta property="og:description" content="All collectable creatures in the correct order." />
-<meta property="og:image" content="" />
-{% endblock %}
-{% block content %}
-	{% for section in sections %}
-	<div  itemscope itemtype="http://schema.org/ItemList" class="panel panel-default panel-units">
-		<div class="panel-body">
-			<meta content="{{mon}}">
-			<div class="page-header unit-name">
-				<h1 itemprop="name">{{section.name}}</h1>
-			</div>
-			<div class="row carousel">
-				{% for unit in section.unit_set.all|dictsort:"pos" %}
-					   {% if forloop.first %}
-						<div class="col-xs-2">
-						{% endif %}
-						  <div itemprop="itemListElement" itemscope itemtype="http://schema.org/Thing" class="unit-container">
-							<a itemprop="url" class="to-unit" href="{% url 'unit' unit.id %}">
-								<img itemprop="image" data-lazy="{{ unit.pic.url }}" class="img-responsive img-circle unit rarity-{{unit.rarity}}" alt="{{unit.name}} in New Leaf" height="131" width="131">
-								<p itemprop="name" class="text-center"><small>{{unit.name}}</small></p>
-							</a>
-						  </div>	
-						{% if forloop.counter|divisibleby:"3" %}
-						</div>
-						<div class="col-xs-2">
-						{% endif %}
-						 {% if forloop.last %}		
-						</div>
-						{% endif %}				
-				{% endfor %}
-			</div>
-		</div>
-	</div>
-	{% endfor %}
-	{% include "include/footer.html" %}
+{% block meta %}{% endblock %}
+{% block main %}
+    {% for section, creatures in creatures.items %}
+        <section class="panel">
+        <h2>{{section}}</h2>
+        {% include 'include/units-list.html' with units=creatures %}
+        </section>
+    {% endfor %}
 {% endblock %}
 {% block script %}
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="{% static 'slick/slick.min.js' %}"></script>
-    
-    <script type="text/javascript">
-		$(document).ready(function(){
-		  $('.carousel').slick({
-			lazyLoad: 'ondemand',
-			slidesToShow: 6,
-			slidesToScroll: 3,
-			dots: true,
-			infinite:false,
-		  });
-		});
-	  </script>
 {% endblock %}

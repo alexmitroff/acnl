@@ -1,0 +1,12 @@
+<ul class="units">
+    {% for unit in units %}
+        <li>
+            <a href="{% url 'unit' unit.id %}">
+                <img src="/media/{{ unit.pic }}"
+                     class="rarity-{{unit.rarity}}"
+                     alt="{{unit.name}} in New Leaf">
+                <span>{{unit.name}}</span>
+            </a>
+        </li>
+    {% endfor %}
+</ul>

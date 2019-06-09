@@ -1,0 +1,21 @@
+{% load static %}
+
+{% url 'last' as url_last %}
+{% url 'monthly' as url_monthly %}
+{% url 'index' as url_index %}
+{% url 'unit' unit.id as url_unit %}
+
+<header>
+    <section class="logo">
+        <a href="{% url 'index' %}">
+            <img src="{% static 'img/logo/logo.png' %}" alt="">
+        </a>
+    </section>
+    <section>
+        <nav>
+            <a href="{% url 'last' %}" class="{% ifequal request.path url_last %}active{% endifequal %}">{{ mon }} last chance</a>
+            <a href="{% url 'monthly' %}" class="{% ifequal request.path url_monthly %}active{% endifequal %}">Available in {{mon}}</a>
+            <a href="{% url 'index' %}" class="{% ifequal request.path url_index %}active{% endifequal %} {% ifequal request.path url_unit %}active{% endifequal %}">Encyclopedia</a>
+        </nav>
+    </section>
+</header>
