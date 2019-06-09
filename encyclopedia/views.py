@@ -1,16 +1,19 @@
 from django.shortcuts import render
 
-from django.template import RequestContext
+from encyclopedia.naturalist import Naturalist
 from encyclopedia.models import *
 from encyclopedia.core import *
 
 
 def index(request):
     template_url = 'pages/index.html'
-    sections = Section.objects.filter(show = True).order_by('pos')
     month = get_month()
-    context = {'sections': sections,
-            'mon':month,}
+    naturalist = Naturalist(month)
+    naturalist.remember_creature_classification()
+    context = {
+        'creatures': naturalist.all_creatures,
+        'mon': month
+    }
     return render(request, template_url, context)
 
 
