@@ -2,12 +2,18 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 10.4
+-- Dumped by pg_dump version 10.4
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
@@ -23,29 +29,27 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
-SET search_path = public, pg_catalog;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- Name: auth_group; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE auth_group (
+CREATE TABLE public.auth_group (
     id integer NOT NULL,
-    name character varying(80) NOT NULL
+    name character varying(150) NOT NULL
 );
 
 
-ALTER TABLE public.auth_group OWNER TO ac_admin;
+ALTER TABLE public.auth_group OWNER TO acnl;
 
 --
--- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE auth_group_id_seq
+CREATE SEQUENCE public.auth_group_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -53,33 +57,33 @@ CREATE SEQUENCE auth_group_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_group_id_seq OWNER TO ac_admin;
+ALTER TABLE public.auth_group_id_seq OWNER TO acnl;
 
 --
--- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE auth_group_id_seq OWNED BY auth_group.id;
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
 
 
 --
--- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE auth_group_permissions (
+CREATE TABLE public.auth_group_permissions (
     id integer NOT NULL,
     group_id integer NOT NULL,
     permission_id integer NOT NULL
 );
 
 
-ALTER TABLE public.auth_group_permissions OWNER TO ac_admin;
+ALTER TABLE public.auth_group_permissions OWNER TO acnl;
 
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE auth_group_permissions_id_seq
+CREATE SEQUENCE public.auth_group_permissions_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -87,34 +91,34 @@ CREATE SEQUENCE auth_group_permissions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_group_permissions_id_seq OWNER TO ac_admin;
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO acnl;
 
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE auth_group_permissions_id_seq OWNED BY auth_group_permissions.id;
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
 
 
 --
--- Name: auth_permission; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE auth_permission (
+CREATE TABLE public.auth_permission (
     id integer NOT NULL,
-    name character varying(50) NOT NULL,
+    name character varying(255) NOT NULL,
     content_type_id integer NOT NULL,
     codename character varying(100) NOT NULL
 );
 
 
-ALTER TABLE public.auth_permission OWNER TO ac_admin;
+ALTER TABLE public.auth_permission OWNER TO acnl;
 
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE auth_permission_id_seq
+CREATE SEQUENCE public.auth_permission_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -122,54 +126,54 @@ CREATE SEQUENCE auth_permission_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_permission_id_seq OWNER TO ac_admin;
+ALTER TABLE public.auth_permission_id_seq OWNER TO acnl;
 
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
 
 
 --
--- Name: auth_user; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE auth_user (
+CREATE TABLE public.auth_user (
     id integer NOT NULL,
     password character varying(128) NOT NULL,
-    last_login timestamp with time zone NOT NULL,
+    last_login timestamp with time zone,
     is_superuser boolean NOT NULL,
-    username character varying(30) NOT NULL,
+    username character varying(150) NOT NULL,
     first_name character varying(30) NOT NULL,
-    last_name character varying(30) NOT NULL,
-    email character varying(75) NOT NULL,
+    last_name character varying(150) NOT NULL,
+    email character varying(254) NOT NULL,
     is_staff boolean NOT NULL,
     is_active boolean NOT NULL,
     date_joined timestamp with time zone NOT NULL
 );
 
 
-ALTER TABLE public.auth_user OWNER TO ac_admin;
+ALTER TABLE public.auth_user OWNER TO acnl;
 
 --
--- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE auth_user_groups (
+CREATE TABLE public.auth_user_groups (
     id integer NOT NULL,
     user_id integer NOT NULL,
     group_id integer NOT NULL
 );
 
 
-ALTER TABLE public.auth_user_groups OWNER TO ac_admin;
+ALTER TABLE public.auth_user_groups OWNER TO acnl;
 
 --
--- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE auth_user_groups_id_seq
+CREATE SEQUENCE public.auth_user_groups_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -177,20 +181,20 @@ CREATE SEQUENCE auth_user_groups_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_user_groups_id_seq OWNER TO ac_admin;
+ALTER TABLE public.auth_user_groups_id_seq OWNER TO acnl;
 
 --
--- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE auth_user_groups_id_seq OWNED BY auth_user_groups.id;
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
 
 
 --
--- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE auth_user_id_seq
+CREATE SEQUENCE public.auth_user_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -198,33 +202,33 @@ CREATE SEQUENCE auth_user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_user_id_seq OWNER TO ac_admin;
+ALTER TABLE public.auth_user_id_seq OWNER TO acnl;
 
 --
--- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE auth_user_id_seq OWNED BY auth_user.id;
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
 
 
 --
--- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE auth_user_user_permissions (
+CREATE TABLE public.auth_user_user_permissions (
     id integer NOT NULL,
     user_id integer NOT NULL,
     permission_id integer NOT NULL
 );
 
 
-ALTER TABLE public.auth_user_user_permissions OWNER TO ac_admin;
+ALTER TABLE public.auth_user_user_permissions OWNER TO acnl;
 
 --
--- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE auth_user_user_permissions_id_seq
+CREATE SEQUENCE public.auth_user_user_permissions_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -232,20 +236,20 @@ CREATE SEQUENCE auth_user_user_permissions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO ac_admin;
+ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO acnl;
 
 --
--- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE auth_user_user_permissions_id_seq OWNED BY auth_user_user_permissions.id;
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
 
 
 --
--- Name: django_admin_log; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE django_admin_log (
+CREATE TABLE public.django_admin_log (
     id integer NOT NULL,
     action_time timestamp with time zone NOT NULL,
     object_id text,
@@ -258,13 +262,13 @@ CREATE TABLE django_admin_log (
 );
 
 
-ALTER TABLE public.django_admin_log OWNER TO ac_admin;
+ALTER TABLE public.django_admin_log OWNER TO acnl;
 
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE django_admin_log_id_seq
+CREATE SEQUENCE public.django_admin_log_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -272,34 +276,33 @@ CREATE SEQUENCE django_admin_log_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_admin_log_id_seq OWNER TO ac_admin;
+ALTER TABLE public.django_admin_log_id_seq OWNER TO acnl;
 
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE django_admin_log_id_seq OWNED BY django_admin_log.id;
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
 
 
 --
--- Name: django_content_type; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE django_content_type (
+CREATE TABLE public.django_content_type (
     id integer NOT NULL,
-    name character varying(100) NOT NULL,
     app_label character varying(100) NOT NULL,
     model character varying(100) NOT NULL
 );
 
 
-ALTER TABLE public.django_content_type OWNER TO ac_admin;
+ALTER TABLE public.django_content_type OWNER TO acnl;
 
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE django_content_type_id_seq
+CREATE SEQUENCE public.django_content_type_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -307,20 +310,20 @@ CREATE SEQUENCE django_content_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_content_type_id_seq OWNER TO ac_admin;
+ALTER TABLE public.django_content_type_id_seq OWNER TO acnl;
 
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE django_content_type_id_seq OWNED BY django_content_type.id;
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
 
 
 --
--- Name: django_migrations; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE django_migrations (
+CREATE TABLE public.django_migrations (
     id integer NOT NULL,
     app character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
@@ -328,13 +331,13 @@ CREATE TABLE django_migrations (
 );
 
 
-ALTER TABLE public.django_migrations OWNER TO ac_admin;
+ALTER TABLE public.django_migrations OWNER TO acnl;
 
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE django_migrations_id_seq
+CREATE SEQUENCE public.django_migrations_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -342,33 +345,33 @@ CREATE SEQUENCE django_migrations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_migrations_id_seq OWNER TO ac_admin;
+ALTER TABLE public.django_migrations_id_seq OWNER TO acnl;
 
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE django_migrations_id_seq OWNED BY django_migrations.id;
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
 
 
 --
--- Name: django_session; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: django_session; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE django_session (
+CREATE TABLE public.django_session (
     session_key character varying(40) NOT NULL,
     session_data text NOT NULL,
     expire_date timestamp with time zone NOT NULL
 );
 
 
-ALTER TABLE public.django_session OWNER TO ac_admin;
+ALTER TABLE public.django_session OWNER TO acnl;
 
 --
--- Name: encyclopedia_month; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: encyclopedia_month; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE encyclopedia_month (
+CREATE TABLE public.encyclopedia_month (
     id integer NOT NULL,
     pos integer NOT NULL,
     name character varying(10) NOT NULL,
@@ -376,13 +379,13 @@ CREATE TABLE encyclopedia_month (
 );
 
 
-ALTER TABLE public.encyclopedia_month OWNER TO ac_admin;
+ALTER TABLE public.encyclopedia_month OWNER TO acnl;
 
 --
--- Name: encyclopedia_month_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: encyclopedia_month_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE encyclopedia_month_id_seq
+CREATE SEQUENCE public.encyclopedia_month_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -390,20 +393,20 @@ CREATE SEQUENCE encyclopedia_month_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.encyclopedia_month_id_seq OWNER TO ac_admin;
+ALTER TABLE public.encyclopedia_month_id_seq OWNER TO acnl;
 
 --
--- Name: encyclopedia_month_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: encyclopedia_month_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE encyclopedia_month_id_seq OWNED BY encyclopedia_month.id;
+ALTER SEQUENCE public.encyclopedia_month_id_seq OWNED BY public.encyclopedia_month.id;
 
 
 --
--- Name: encyclopedia_section; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: encyclopedia_section; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE encyclopedia_section (
+CREATE TABLE public.encyclopedia_section (
     id integer NOT NULL,
     pos integer NOT NULL,
     show boolean NOT NULL,
@@ -412,13 +415,13 @@ CREATE TABLE encyclopedia_section (
 );
 
 
-ALTER TABLE public.encyclopedia_section OWNER TO ac_admin;
+ALTER TABLE public.encyclopedia_section OWNER TO acnl;
 
 --
--- Name: encyclopedia_section_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: encyclopedia_section_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE encyclopedia_section_id_seq
+CREATE SEQUENCE public.encyclopedia_section_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -426,20 +429,20 @@ CREATE SEQUENCE encyclopedia_section_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.encyclopedia_section_id_seq OWNER TO ac_admin;
+ALTER TABLE public.encyclopedia_section_id_seq OWNER TO acnl;
 
 --
--- Name: encyclopedia_section_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: encyclopedia_section_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE encyclopedia_section_id_seq OWNED BY encyclopedia_section.id;
+ALTER SEQUENCE public.encyclopedia_section_id_seq OWNED BY public.encyclopedia_section.id;
 
 
 --
--- Name: encyclopedia_unit; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: encyclopedia_unit; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE encyclopedia_unit (
+CREATE TABLE public.encyclopedia_unit (
     id integer NOT NULL,
     pos integer NOT NULL,
     pic character varying(100) NOT NULL,
@@ -456,13 +459,13 @@ CREATE TABLE encyclopedia_unit (
 );
 
 
-ALTER TABLE public.encyclopedia_unit OWNER TO ac_admin;
+ALTER TABLE public.encyclopedia_unit OWNER TO acnl;
 
 --
--- Name: encyclopedia_unit_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: encyclopedia_unit_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE encyclopedia_unit_id_seq
+CREATE SEQUENCE public.encyclopedia_unit_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -470,33 +473,33 @@ CREATE SEQUENCE encyclopedia_unit_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.encyclopedia_unit_id_seq OWNER TO ac_admin;
+ALTER TABLE public.encyclopedia_unit_id_seq OWNER TO acnl;
 
 --
--- Name: encyclopedia_unit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: encyclopedia_unit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE encyclopedia_unit_id_seq OWNED BY encyclopedia_unit.id;
+ALTER SEQUENCE public.encyclopedia_unit_id_seq OWNED BY public.encyclopedia_unit.id;
 
 
 --
--- Name: encyclopedia_unit_months; Type: TABLE; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: encyclopedia_unit_months; Type: TABLE; Schema: public; Owner: acnl
 --
 
-CREATE TABLE encyclopedia_unit_months (
+CREATE TABLE public.encyclopedia_unit_months (
     id integer NOT NULL,
     unit_id integer NOT NULL,
     month_id integer NOT NULL
 );
 
 
-ALTER TABLE public.encyclopedia_unit_months OWNER TO ac_admin;
+ALTER TABLE public.encyclopedia_unit_months OWNER TO acnl;
 
 --
--- Name: encyclopedia_unit_months_id_seq; Type: SEQUENCE; Schema: public; Owner: ac_admin
+-- Name: encyclopedia_unit_months_id_seq; Type: SEQUENCE; Schema: public; Owner: acnl
 --
 
-CREATE SEQUENCE encyclopedia_unit_months_id_seq
+CREATE SEQUENCE public.encyclopedia_unit_months_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -504,141 +507,127 @@ CREATE SEQUENCE encyclopedia_unit_months_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.encyclopedia_unit_months_id_seq OWNER TO ac_admin;
+ALTER TABLE public.encyclopedia_unit_months_id_seq OWNER TO acnl;
 
 --
--- Name: encyclopedia_unit_months_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ac_admin
+-- Name: encyclopedia_unit_months_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: acnl
 --
 
-ALTER SEQUENCE encyclopedia_unit_months_id_seq OWNED BY encyclopedia_unit_months.id;
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY auth_group ALTER COLUMN id SET DEFAULT nextval('auth_group_id_seq'::regclass);
+ALTER SEQUENCE public.encyclopedia_unit_months_id_seq OWNED BY public.encyclopedia_unit_months.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('auth_group_permissions_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY auth_permission ALTER COLUMN id SET DEFAULT nextval('auth_permission_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_user ALTER COLUMN id SET DEFAULT nextval('auth_user_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY auth_user_groups ALTER COLUMN id SET DEFAULT nextval('auth_user_groups_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('auth_user_user_permissions_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY django_admin_log ALTER COLUMN id SET DEFAULT nextval('django_admin_log_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY django_content_type ALTER COLUMN id SET DEFAULT nextval('django_content_type_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY django_migrations ALTER COLUMN id SET DEFAULT nextval('django_migrations_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY encyclopedia_month ALTER COLUMN id SET DEFAULT nextval('encyclopedia_month_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY encyclopedia_section ALTER COLUMN id SET DEFAULT nextval('encyclopedia_section_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY encyclopedia_unit ALTER COLUMN id SET DEFAULT nextval('encyclopedia_unit_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY encyclopedia_unit_months ALTER COLUMN id SET DEFAULT nextval('encyclopedia_unit_months_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
 
 
 --
--- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: ac_admin
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: acnl
 --
 
-COPY auth_group (id, name) FROM stdin;
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: encyclopedia_month id; Type: DEFAULT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.encyclopedia_month ALTER COLUMN id SET DEFAULT nextval('public.encyclopedia_month_id_seq'::regclass);
+
+
+--
+-- Name: encyclopedia_section id; Type: DEFAULT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.encyclopedia_section ALTER COLUMN id SET DEFAULT nextval('public.encyclopedia_section_id_seq'::regclass);
+
+
+--
+-- Name: encyclopedia_unit id; Type: DEFAULT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.encyclopedia_unit ALTER COLUMN id SET DEFAULT nextval('public.encyclopedia_unit_id_seq'::regclass);
+
+
+--
+-- Name: encyclopedia_unit_months id; Type: DEFAULT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.encyclopedia_unit_months ALTER COLUMN id SET DEFAULT nextval('public.encyclopedia_unit_months_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: acnl
+--
+
+COPY public.auth_group (id, name) FROM stdin;
 \.
 
 
 --
--- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('auth_group_id_seq', 1, false);
-
-
---
--- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: ac_admin
---
-
-COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 \.
 
 
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('auth_group_permissions_id_seq', 1, false);
-
-
---
--- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: ac_admin
---
-
-COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 1	Can add log entry	1	add_logentry
 2	Can change log entry	1	change_logentry
 3	Can delete log entry	1	delete_logentry
@@ -666,53 +655,41 @@ COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
 25	Can add unit	9	add_unit
 26	Can change unit	9	change_unit
 27	Can delete unit	9	delete_unit
+28	Can view log entry	1	view_logentry
+29	Can view permission	2	view_permission
+30	Can view group	3	view_group
+31	Can view user	4	view_user
+32	Can view content type	5	view_contenttype
+33	Can view session	6	view_session
+34	Can view month	8	view_month
+35	Can view section	7	view_section
+36	Can view unit	9	view_unit
 \.
 
 
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('auth_permission_id_seq', 27, true);
-
-
---
--- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: ac_admin
---
-
-COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
 2	pbkdf2_sha256$15000$IyRRQlqYfPmF$5khZQhqo+TnNZSzo3FRue1koFHvQ9i0PqMhhMp+0P6E=	2015-12-02 19:10:34.966415+03	f	roscoe				t	t	2015-02-05 12:37:53+03
 1	pbkdf2_sha256$15000$lP883YGbiqrU$Y4YtyB3qkZ6zrxihG+yi6EYnWCwe1EfxONs+b5ilykU=	2016-01-10 01:04:23.720705+03	t	aka_alarm			alarm-1@yandex.ru	t	t	2015-02-05 12:32:08.426821+03
 \.
 
 
 --
--- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: ac_admin
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-COPY auth_user_groups (id, user_id, group_id) FROM stdin;
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 \.
 
 
 --
--- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('auth_user_groups_id_seq', 1, false);
-
-
---
--- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
---
-
-SELECT pg_catalog.setval('auth_user_id_seq', 2, true);
-
-
---
--- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: ac_admin
---
-
-COPY auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 7	2	19
 8	2	20
 9	2	21
@@ -723,17 +700,10 @@ COPY auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 
 
 --
--- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('auth_user_user_permissions_id_seq', 12, true);
-
-
---
--- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: ac_admin
---
-
-COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
 1	2015-02-05 12:33:47.841266+03	1	January	1		8	1
 2	2015-02-05 12:34:01.319588+03	2	February	1		8	1
 3	2015-02-05 12:34:13.471512+03	3	March	1		8	1
@@ -969,41 +939,27 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 
 
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 231, true);
-
-
---
--- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: ac_admin
---
-
-COPY django_content_type (id, name, app_label, model) FROM stdin;
-1	log entry	admin	logentry
-2	permission	auth	permission
-3	group	auth	group
-4	user	auth	user
-5	content type	contenttypes	contenttype
-6	session	sessions	session
-7	section	encyclopedia	section
-8	month	encyclopedia	month
-9	unit	encyclopedia	unit
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	encyclopedia	section
+8	encyclopedia	month
+9	encyclopedia	unit
 \.
 
 
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('django_content_type_id_seq', 9, true);
-
-
---
--- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: ac_admin
---
-
-COPY django_migrations (id, app, name, applied) FROM stdin;
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
 1	contenttypes	0001_initial	2015-02-05 12:19:30.954412+03
 2	auth	0001_initial	2015-02-05 12:19:31.541207+03
 3	admin	0001_initial	2015-02-05 12:19:31.656356+03
@@ -1011,21 +967,27 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 5	encyclopedia	0001_initial	2015-02-05 12:27:36.111252+03
 6	encyclopedia	0002_auto_20150207_1820	2015-02-07 18:20:38.64178+03
 7	encyclopedia	0003_auto_20150215_1035	2015-02-15 10:36:15.807646+03
+8	admin	0002_logentry_remove_auto_add	2019-09-24 15:38:03.343272+03
+9	admin	0003_logentry_add_action_flag_choices	2019-09-24 15:38:03.380957+03
+10	contenttypes	0002_remove_content_type_name	2019-09-24 15:38:03.410793+03
+11	auth	0002_alter_permission_name_max_length	2019-09-24 15:38:03.419033+03
+12	auth	0003_alter_user_email_max_length	2019-09-24 15:38:03.432281+03
+13	auth	0004_alter_user_username_opts	2019-09-24 15:38:03.442599+03
+14	auth	0005_alter_user_last_login_null	2019-09-24 15:38:03.453344+03
+15	auth	0006_require_contenttypes_0002	2019-09-24 15:38:03.458815+03
+16	auth	0007_alter_validators_add_error_messages	2019-09-24 15:38:03.478973+03
+17	auth	0008_alter_user_username_max_length	2019-09-24 15:38:03.539928+03
+18	auth	0009_alter_user_last_name_max_length	2019-09-24 15:38:03.570546+03
+19	auth	0010_alter_group_name_max_length	2019-09-24 15:38:03.588482+03
+20	auth	0011_update_proxy_permissions	2019-09-24 15:38:03.604025+03
 \.
 
 
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('django_migrations_id_seq', 7, true);
-
-
---
--- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: ac_admin
---
-
-COPY django_session (session_key, session_data, expire_date) FROM stdin;
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 rnzlwonb3br9r1zh67xwvk8t5d5s8k87	ZDM2MzhlZmQyODY0NjFhOGRmMGZlOWNmZjgyYmU1ZTEwZDEyODBiZTp7Il9hdXRoX3VzZXJfaGFzaCI6ImRhODQ1YzQyZDZhMzYwMmUyODVmZmViNDVjOTE2MmJhOGI0YzY3NGIiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOjF9	2015-02-06 12:33:26.587536+03
 s662bjqcq2842h4exmvu00ezst7zakut	ZDM2MzhlZmQyODY0NjFhOGRmMGZlOWNmZjgyYmU1ZTEwZDEyODBiZTp7Il9hdXRoX3VzZXJfaGFzaCI6ImRhODQ1YzQyZDZhMzYwMmUyODVmZmViNDVjOTE2MmJhOGI0YzY3NGIiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOjF9	2015-02-06 19:31:11.615724+03
 968c0msci3t1yklxhcnvjghfngyg1btb	MTlkZDI2YzRhOGVjOTNkNjlhZGE1OTJhMmRkYWE5OWQ1NmUzNjRhYTp7Il9hdXRoX3VzZXJfaGFzaCI6ImNmMGJlMTM5NjU5OGMwZDk1ODAxOTRmZDM5MGFiODNjMzI2ZDE0NjMiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOjJ9	2015-02-06 20:57:11.095081+03
@@ -1045,10 +1007,10 @@ t3efqe38illrqvv705j8illydie36rlp	ZDM2MzhlZmQyODY0NjFhOGRmMGZlOWNmZjgyYmU1ZTEwZDE
 
 
 --
--- Data for Name: encyclopedia_month; Type: TABLE DATA; Schema: public; Owner: ac_admin
+-- Data for Name: encyclopedia_month; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-COPY encyclopedia_month (id, pos, name, season) FROM stdin;
+COPY public.encyclopedia_month (id, pos, name, season) FROM stdin;
 1	1	January	winter
 2	2	February	winter
 3	3	March	spring
@@ -1065,17 +1027,10 @@ COPY encyclopedia_month (id, pos, name, season) FROM stdin;
 
 
 --
--- Name: encyclopedia_month_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Data for Name: encyclopedia_section; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('encyclopedia_month_id_seq', 12, true);
-
-
---
--- Data for Name: encyclopedia_section; Type: TABLE DATA; Schema: public; Owner: ac_admin
---
-
-COPY encyclopedia_section (id, pos, show, name, "desc") FROM stdin;
+COPY public.encyclopedia_section (id, pos, show, name, "desc") FROM stdin;
 1	0	t	Bugs	Bugs are collectable items in the Animal Crossing series. Players can catch them with a net. They can be donated to the museum, sold to Tom Nook, or placed in the player's home inside a Bug Cage, like a piece of furniture. Most of them are worth a lot less than most fish at Tom Nook's store. A large amount of bugs will only emerge during the Summer, a few unique species emerge in Autumn and Spring, and there are almost none during the Winter. 
 2	2	t	Fish	Fish are a collectible item in the Animal Crossing series. Players can catch them with a fishing rod. They can be donated to the museum to fill out the aquarium, sold to Tom Nook, or placed in the player's home inside a Fish Tank, like a piece of furniture.
 3	3	t	Deep sea creatures	Deep sea creatures are a new category of collectables in Animal Crossing: New Leaf, found by diving underwater while swimming. 
@@ -1083,17 +1038,10 @@ COPY encyclopedia_section (id, pos, show, name, "desc") FROM stdin;
 
 
 --
--- Name: encyclopedia_section_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Data for Name: encyclopedia_unit; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('encyclopedia_section_id_seq', 3, true);
-
-
---
--- Data for Name: encyclopedia_unit; Type: TABLE DATA; Schema: public; Owner: ac_admin
---
-
-COPY encyclopedia_unit (id, pos, pic, name, rarity, "desc", loc, shadow, price, str_time, end_time, section_id, island) FROM stdin;
+COPY public.encyclopedia_unit (id, pos, pic, name, rarity, "desc", loc, shadow, price, str_time, end_time, section_id, island) FROM stdin;
 1	1	units/Common_Butterfly_nl.png	Common Butterfly	2	Seen flapping in the sun, common butterflies can be identified by black spots on their white wings. To the human eye, both males and females look white, but there are actually subtle differences. On closer inspection, the males' wings look black while the females' wings look white. The caterpillars have been known to cause damage to farmers' crops.	Flying near flowers 		90	04:00:00	19:00:00	1	f
 2	2	units/Yellow_Butterfly_nl.png	Yellow Butterfly	2	The yellow butterfly is similar to the common butterfly, with the two easily mistaken for one another. Males are more often a yellowish color, and females are more often white. The larvae feed on plants of the Fabacae family, such as milk vetch or white clover.	Flying near flowers 		90	06:00:00	16:00:00	1	f
 3	3	units/Tiger_Butterfly_nl.png	Tiger Butterfly	3	The larvae of tiger butterflies feed on leaves of orange trees until they metamorphose. When they're threatened, they emit a foul smell from their antennae to protect themselves. The dusting you see on your fingers whenever you touch their wings is actually from their scales. These scales form the wing pattern as well as repel rainwater, making them very important for survival.	Flying near flowers 		160	08:00:00	19:00:00	1	f
@@ -1272,17 +1220,10 @@ COPY encyclopedia_unit (id, pos, pic, name, rarity, "desc", loc, shadow, price, 
 
 
 --
--- Name: encyclopedia_unit_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Data for Name: encyclopedia_unit_months; Type: TABLE DATA; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('encyclopedia_unit_id_seq', 175, true);
-
-
---
--- Data for Name: encyclopedia_unit_months; Type: TABLE DATA; Schema: public; Owner: ac_admin
---
-
-COPY encyclopedia_unit_months (id, unit_id, month_id) FROM stdin;
+COPY public.encyclopedia_unit_months (id, unit_id, month_id) FROM stdin;
 1	1	9
 2	1	3
 3	1	4
@@ -2370,404 +2311,478 @@ COPY encyclopedia_unit_months (id, unit_id, month_id) FROM stdin;
 
 
 --
--- Name: encyclopedia_unit_months_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ac_admin
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('encyclopedia_unit_months_id_seq', 1333, true);
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
 
 
 --
--- Name: auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_group
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 36, true);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 2, true);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 12, true);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 231, true);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 9, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 20, true);
+
+
+--
+-- Name: encyclopedia_month_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
+--
+
+SELECT pg_catalog.setval('public.encyclopedia_month_id_seq', 12, true);
+
+
+--
+-- Name: encyclopedia_section_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
+--
+
+SELECT pg_catalog.setval('public.encyclopedia_section_id_seq', 3, true);
+
+
+--
+-- Name: encyclopedia_unit_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
+--
+
+SELECT pg_catalog.setval('public.encyclopedia_unit_id_seq', 175, true);
+
+
+--
+-- Name: encyclopedia_unit_months_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
+--
+
+SELECT pg_catalog.setval('public.encyclopedia_unit_months_id_seq', 1333, true);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.auth_group
     ADD CONSTRAINT auth_group_name_key UNIQUE (name);
 
 
 --
--- Name: auth_group_permissions_group_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_group_permissions
+ALTER TABLE ONLY public.auth_group_permissions
     ADD CONSTRAINT auth_group_permissions_group_id_permission_id_key UNIQUE (group_id, permission_id);
 
 
 --
--- Name: auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_group_permissions
+ALTER TABLE ONLY public.auth_group_permissions
     ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_group
+ALTER TABLE ONLY public.auth_group
     ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_permission_content_type_id_codename_key; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_permission auth_permission_content_type_id_codename_key; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_permission
+ALTER TABLE ONLY public.auth_permission
     ADD CONSTRAINT auth_permission_content_type_id_codename_key UNIQUE (content_type_id, codename);
 
 
 --
--- Name: auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_permission
+ALTER TABLE ONLY public.auth_permission
     ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_user_groups
+ALTER TABLE ONLY public.auth_user_groups
     ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_user_groups_user_id_group_id_key; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_key; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_user_groups
+ALTER TABLE ONLY public.auth_user_groups
     ADD CONSTRAINT auth_user_groups_user_id_group_id_key UNIQUE (user_id, group_id);
 
 
 --
--- Name: auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_user
+ALTER TABLE ONLY public.auth_user
     ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_user_user_permissions
+ALTER TABLE ONLY public.auth_user_user_permissions
     ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_user_user_permissions_user_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_user_user_permissions
+ALTER TABLE ONLY public.auth_user_user_permissions
     ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_key UNIQUE (user_id, permission_id);
 
 
 --
--- Name: auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_user
+ALTER TABLE ONLY public.auth_user
     ADD CONSTRAINT auth_user_username_key UNIQUE (username);
 
 
 --
--- Name: django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY django_admin_log
+ALTER TABLE ONLY public.django_admin_log
     ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
 
 
 --
--- Name: django_content_type_app_label_45f3b1d93ec8c61c_uniq; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: django_content_type django_content_type_app_label_45f3b1d93ec8c61c_uniq; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY django_content_type
+ALTER TABLE ONLY public.django_content_type
     ADD CONSTRAINT django_content_type_app_label_45f3b1d93ec8c61c_uniq UNIQUE (app_label, model);
 
 
 --
--- Name: django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY django_content_type
+ALTER TABLE ONLY public.django_content_type
     ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
 
 
 --
--- Name: django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY django_migrations
+ALTER TABLE ONLY public.django_migrations
     ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
 
 
 --
--- Name: django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY django_session
+ALTER TABLE ONLY public.django_session
     ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
 
 
 --
--- Name: encyclopedia_month_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: encyclopedia_month encyclopedia_month_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY encyclopedia_month
+ALTER TABLE ONLY public.encyclopedia_month
     ADD CONSTRAINT encyclopedia_month_pkey PRIMARY KEY (id);
 
 
 --
--- Name: encyclopedia_section_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: encyclopedia_section encyclopedia_section_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY encyclopedia_section
+ALTER TABLE ONLY public.encyclopedia_section
     ADD CONSTRAINT encyclopedia_section_pkey PRIMARY KEY (id);
 
 
 --
--- Name: encyclopedia_unit_months_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: encyclopedia_unit_months encyclopedia_unit_months_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY encyclopedia_unit_months
+ALTER TABLE ONLY public.encyclopedia_unit_months
     ADD CONSTRAINT encyclopedia_unit_months_pkey PRIMARY KEY (id);
 
 
 --
--- Name: encyclopedia_unit_months_unit_id_month_id_key; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: encyclopedia_unit_months encyclopedia_unit_months_unit_id_month_id_key; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY encyclopedia_unit_months
+ALTER TABLE ONLY public.encyclopedia_unit_months
     ADD CONSTRAINT encyclopedia_unit_months_unit_id_month_id_key UNIQUE (unit_id, month_id);
 
 
 --
--- Name: encyclopedia_unit_pkey; Type: CONSTRAINT; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: encyclopedia_unit encyclopedia_unit_pkey; Type: CONSTRAINT; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY encyclopedia_unit
+ALTER TABLE ONLY public.encyclopedia_unit
     ADD CONSTRAINT encyclopedia_unit_pkey PRIMARY KEY (id);
 
 
 --
--- Name: auth_group_name_253ae2a6331666e8_like; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_group_name_253ae2a6331666e8_like; Type: INDEX; Schema: public; Owner: acnl
 --
 
-CREATE INDEX auth_group_name_253ae2a6331666e8_like ON auth_group USING btree (name varchar_pattern_ops);
-
-
---
--- Name: auth_group_permissions_0e939a4f; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
---
-
-CREATE INDEX auth_group_permissions_0e939a4f ON auth_group_permissions USING btree (group_id);
+CREATE INDEX auth_group_name_253ae2a6331666e8_like ON public.auth_group USING btree (name varchar_pattern_ops);
 
 
 --
--- Name: auth_group_permissions_8373b171; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_group_permissions_0e939a4f; Type: INDEX; Schema: public; Owner: acnl
 --
 
-CREATE INDEX auth_group_permissions_8373b171 ON auth_group_permissions USING btree (permission_id);
-
-
---
--- Name: auth_permission_417f1b1c; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
---
-
-CREATE INDEX auth_permission_417f1b1c ON auth_permission USING btree (content_type_id);
+CREATE INDEX auth_group_permissions_0e939a4f ON public.auth_group_permissions USING btree (group_id);
 
 
 --
--- Name: auth_user_groups_0e939a4f; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_group_permissions_8373b171; Type: INDEX; Schema: public; Owner: acnl
 --
 
-CREATE INDEX auth_user_groups_0e939a4f ON auth_user_groups USING btree (group_id);
-
-
---
--- Name: auth_user_groups_e8701ad4; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
---
-
-CREATE INDEX auth_user_groups_e8701ad4 ON auth_user_groups USING btree (user_id);
+CREATE INDEX auth_group_permissions_8373b171 ON public.auth_group_permissions USING btree (permission_id);
 
 
 --
--- Name: auth_user_user_permissions_8373b171; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_permission_417f1b1c; Type: INDEX; Schema: public; Owner: acnl
 --
 
-CREATE INDEX auth_user_user_permissions_8373b171 ON auth_user_user_permissions USING btree (permission_id);
-
-
---
--- Name: auth_user_user_permissions_e8701ad4; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
---
-
-CREATE INDEX auth_user_user_permissions_e8701ad4 ON auth_user_user_permissions USING btree (user_id);
+CREATE INDEX auth_permission_417f1b1c ON public.auth_permission USING btree (content_type_id);
 
 
 --
--- Name: auth_user_username_51b3b110094b8aae_like; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user_groups_0e939a4f; Type: INDEX; Schema: public; Owner: acnl
 --
 
-CREATE INDEX auth_user_username_51b3b110094b8aae_like ON auth_user USING btree (username varchar_pattern_ops);
-
-
---
--- Name: django_admin_log_417f1b1c; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
---
-
-CREATE INDEX django_admin_log_417f1b1c ON django_admin_log USING btree (content_type_id);
+CREATE INDEX auth_user_groups_0e939a4f ON public.auth_user_groups USING btree (group_id);
 
 
 --
--- Name: django_admin_log_e8701ad4; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user_groups_e8701ad4; Type: INDEX; Schema: public; Owner: acnl
 --
 
-CREATE INDEX django_admin_log_e8701ad4 ON django_admin_log USING btree (user_id);
-
-
---
--- Name: django_session_de54fa62; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
---
-
-CREATE INDEX django_session_de54fa62 ON django_session USING btree (expire_date);
+CREATE INDEX auth_user_groups_e8701ad4 ON public.auth_user_groups USING btree (user_id);
 
 
 --
--- Name: django_session_session_key_461cfeaa630ca218_like; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user_user_permissions_8373b171; Type: INDEX; Schema: public; Owner: acnl
 --
 
-CREATE INDEX django_session_session_key_461cfeaa630ca218_like ON django_session USING btree (session_key varchar_pattern_ops);
-
-
---
--- Name: encyclopedia_unit_730f6511; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
---
-
-CREATE INDEX encyclopedia_unit_730f6511 ON encyclopedia_unit USING btree (section_id);
+CREATE INDEX auth_user_user_permissions_8373b171 ON public.auth_user_user_permissions USING btree (permission_id);
 
 
 --
--- Name: encyclopedia_unit_months_be312c22; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
+-- Name: auth_user_user_permissions_e8701ad4; Type: INDEX; Schema: public; Owner: acnl
 --
 
-CREATE INDEX encyclopedia_unit_months_be312c22 ON encyclopedia_unit_months USING btree (month_id);
-
-
---
--- Name: encyclopedia_unit_months_e8175980; Type: INDEX; Schema: public; Owner: ac_admin; Tablespace: 
---
-
-CREATE INDEX encyclopedia_unit_months_e8175980 ON encyclopedia_unit_months USING btree (unit_id);
+CREATE INDEX auth_user_user_permissions_e8701ad4 ON public.auth_user_user_permissions USING btree (user_id);
 
 
 --
--- Name: auth_content_type_id_508cf46651277a81_fk_django_content_type_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
+-- Name: auth_user_username_51b3b110094b8aae_like; Type: INDEX; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_permission
-    ADD CONSTRAINT auth_content_type_id_508cf46651277a81_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: auth_group_permissio_group_id_689710a9a73b7457_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY auth_group_permissions
-    ADD CONSTRAINT auth_group_permissio_group_id_689710a9a73b7457_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX auth_user_username_51b3b110094b8aae_like ON public.auth_user USING btree (username varchar_pattern_ops);
 
 
 --
--- Name: auth_group_permission_id_1f49ccbbdc69d2fc_fk_auth_permission_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
+-- Name: django_admin_log_417f1b1c; Type: INDEX; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_group_permissions
-    ADD CONSTRAINT auth_group_permission_id_1f49ccbbdc69d2fc_fk_auth_permission_id FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: auth_user__permission_id_384b62483d7071f0_fk_auth_permission_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY auth_user_user_permissions
-    ADD CONSTRAINT auth_user__permission_id_384b62483d7071f0_fk_auth_permission_id FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX django_admin_log_417f1b1c ON public.django_admin_log USING btree (content_type_id);
 
 
 --
--- Name: auth_user_groups_group_id_33ac548dcf5f8e37_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
+-- Name: django_admin_log_e8701ad4; Type: INDEX; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_user_groups
-    ADD CONSTRAINT auth_user_groups_group_id_33ac548dcf5f8e37_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: auth_user_groups_user_id_4b5ed4ffdb8fd9b0_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY auth_user_groups
-    ADD CONSTRAINT auth_user_groups_user_id_4b5ed4ffdb8fd9b0_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX django_admin_log_e8701ad4 ON public.django_admin_log USING btree (user_id);
 
 
 --
--- Name: auth_user_user_permiss_user_id_7f0938558328534a_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
+-- Name: django_session_de54fa62; Type: INDEX; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY auth_user_user_permissions
-    ADD CONSTRAINT auth_user_user_permiss_user_id_7f0938558328534a_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: djan_content_type_id_697914295151027a_fk_django_content_type_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY django_admin_log
-    ADD CONSTRAINT djan_content_type_id_697914295151027a_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX django_session_de54fa62 ON public.django_session USING btree (expire_date);
 
 
 --
--- Name: django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
+-- Name: django_session_session_key_461cfeaa630ca218_like; Type: INDEX; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY django_admin_log
-    ADD CONSTRAINT django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: encyclope_section_id_604b141532b7458_fk_encyclopedia_section_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY encyclopedia_unit
-    ADD CONSTRAINT encyclope_section_id_604b141532b7458_fk_encyclopedia_section_id FOREIGN KEY (section_id) REFERENCES encyclopedia_section(id) DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX django_session_session_key_461cfeaa630ca218_like ON public.django_session USING btree (session_key varchar_pattern_ops);
 
 
 --
--- Name: encyclopedia_month_id_4ac43ad09a1cd49c_fk_encyclopedia_month_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
+-- Name: encyclopedia_unit_730f6511; Type: INDEX; Schema: public; Owner: acnl
 --
 
-ALTER TABLE ONLY encyclopedia_unit_months
-    ADD CONSTRAINT encyclopedia_month_id_4ac43ad09a1cd49c_fk_encyclopedia_month_id FOREIGN KEY (month_id) REFERENCES encyclopedia_month(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: encyclopedia_u_unit_id_47bd3ccc3a74f68b_fk_encyclopedia_unit_id; Type: FK CONSTRAINT; Schema: public; Owner: ac_admin
---
-
-ALTER TABLE ONLY encyclopedia_unit_months
-    ADD CONSTRAINT encyclopedia_u_unit_id_47bd3ccc3a74f68b_fk_encyclopedia_unit_id FOREIGN KEY (unit_id) REFERENCES encyclopedia_unit(id) DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX encyclopedia_unit_730f6511 ON public.encyclopedia_unit USING btree (section_id);
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- Name: encyclopedia_unit_months_be312c22; Type: INDEX; Schema: public; Owner: acnl
 --
 
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
+CREATE INDEX encyclopedia_unit_months_be312c22 ON public.encyclopedia_unit_months USING btree (month_id);
+
+
+--
+-- Name: encyclopedia_unit_months_e8175980; Type: INDEX; Schema: public; Owner: acnl
+--
+
+CREATE INDEX encyclopedia_unit_months_e8175980 ON public.encyclopedia_unit_months USING btree (unit_id);
+
+
+--
+-- Name: auth_permission auth_content_type_id_508cf46651277a81_fk_django_content_type_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_content_type_id_508cf46651277a81_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_group_id_689710a9a73b7457_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_group_id_689710a9a73b7457_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permission_id_1f49ccbbdc69d2fc_fk_auth_permission_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permission_id_1f49ccbbdc69d2fc_fk_auth_permission_id FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user__permission_id_384b62483d7071f0_fk_auth_permission_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user__permission_id_384b62483d7071f0_fk_auth_permission_id FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_group_id_33ac548dcf5f8e37_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_33ac548dcf5f8e37_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_4b5ed4ffdb8fd9b0_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_4b5ed4ffdb8fd9b0_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permiss_user_id_7f0938558328534a_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permiss_user_id_7f0938558328534a_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log djan_content_type_id_697914295151027a_fk_django_content_type_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT djan_content_type_id_697914295151027a_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: encyclopedia_unit encyclope_section_id_604b141532b7458_fk_encyclopedia_section_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.encyclopedia_unit
+    ADD CONSTRAINT encyclope_section_id_604b141532b7458_fk_encyclopedia_section_id FOREIGN KEY (section_id) REFERENCES public.encyclopedia_section(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: encyclopedia_unit_months encyclopedia_month_id_4ac43ad09a1cd49c_fk_encyclopedia_month_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.encyclopedia_unit_months
+    ADD CONSTRAINT encyclopedia_month_id_4ac43ad09a1cd49c_fk_encyclopedia_month_id FOREIGN KEY (month_id) REFERENCES public.encyclopedia_month(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: encyclopedia_unit_months encyclopedia_u_unit_id_47bd3ccc3a74f68b_fk_encyclopedia_unit_id; Type: FK CONSTRAINT; Schema: public; Owner: acnl
+--
+
+ALTER TABLE ONLY public.encyclopedia_unit_months
+    ADD CONSTRAINT encyclopedia_u_unit_id_47bd3ccc3a74f68b_fk_encyclopedia_unit_id FOREIGN KEY (unit_id) REFERENCES public.encyclopedia_unit(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
