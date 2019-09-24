@@ -8,7 +8,7 @@ class EncyclopediaView(View):
 
     @staticmethod
     def get_month_by_position(position):
-        return Month.objects.filter(pos=position)
+        return Month.objects.get(pos=position)
 
     def get_current_month(self):
         return self.get_month_by_position(get_current_month_number())
@@ -37,14 +37,14 @@ class EncyclopediaView(View):
                 return True
             return False
 
-    def is_first_month(self):
-        current_month = self.get_month_by_position(get_current_month_name())
+    def is_first_month(self, item):
+        current_month = self.get_month_by_position(get_current_month_number())
         position = current_month.pos - 1
         if position < 1:
             position = 12
         prev_month = self.get_month_by_position(position)
 
-        months = unit.months.all().order_by('pos')
+        months = item.months.all().order_by('pos')
 
         if current_month not in months:
             return False
@@ -80,14 +80,16 @@ class EncyclopediaView(View):
         l_list = []
         active_units = self.get_active_units_by_month_number(get_current_month_number())
         for section in sections:
-            section_units = list(active_units.filter(section=section))
+            section_units = active_units.filter(section=section)
             u_list = []
+            o_list = []
             n_list = []  # new units in this month
-            for i in range(len(section_units)):
-                if self.is_first_month(section_units[i]):
-                    item = section_units.pop(i)
+            for item in section_units:
+                if self.is_first_month(item):
                     n_list.append(item)
+                else:
+                    o_list.append(item)
             u_list.append(n_list)
-            u_list.append(section_units)
+            u_list.append(o_list)
             l_list.append(u_list)
         return l_list
