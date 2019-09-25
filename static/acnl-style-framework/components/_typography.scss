@@ -8,6 +8,10 @@
 $default-font: 'Arvo', serif;
 $title-font: 'ACrossingFont', sans-serif;
 
+h1{
+  color: $ac_green;
+}
+
 h2{
   margin-bottom: $small-gap;
 }
