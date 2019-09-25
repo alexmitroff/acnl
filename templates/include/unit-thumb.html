@@ -1,6 +1,6 @@
 <a class="unit-thumb cs2 cm2 cl2" href="{% url 'encyclopedia:unit' unit.id %}">
-    <div class="unit-preview rarity-{{unit.rarity}}">
-        <img src="" alt="{{ unit.name }} in New Leaf">
+    <div class="unit-preview">
+        <img class="rarity-{{unit.rarity}}" src="" alt="{{ unit.name }} in New Leaf">
         {% if unit.banner %}
         <div class="unit-banner">new</div>
         {% endif %}

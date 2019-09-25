@@ -1,15 +1,9 @@
-.rarity-2{
-  > img{
-    border-color: $ac_green;
-  }
-}
-.rarity-3{
-  > img{
-    border-color: $ac_yellow;
-  }
-}
-.rarity-4{
-  > img{
-    border-color: $ac_red;
-  }
-}
+.rarity-1{color: $ac_gray;}
+.rarity-2{border-color: $ac_green;}
+.rarity-3{border-color: $ac_yellow;}
+.rarity-4{border-color: $ac_red;}
+
+.rarity-text-1{color: $ac_gray;}
+.rarity-text-2{color: $ac_green;}
+.rarity-text-3{color: $ac_yellow;}
+.rarity-text-4{color: $ac_red;}
