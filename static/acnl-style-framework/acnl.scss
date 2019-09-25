@@ -1,5 +1,8 @@
 @import './components/colours';
-@import './components/typography';
+
+$unit:1rem;
+
+$default-font-size:16;
 
 @function to-px($num) {
    @return $num*1px;
@@ -34,6 +37,7 @@ $border-radius: px-rem(8);
 /* Core */
 @import './components/anchor';
 @import './components/grid';
+@import './components/typography';
 @import './components/button';
 
 *{

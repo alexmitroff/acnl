@@ -7,20 +7,20 @@
         <nav>
             <ul>
                 {% url 'last' as url_last %}
-                <li><a  class="button
-                               {% ifequal request.path url_last %}active{% endifequal %}"
-                        href="{% url 'last' %}" class="menu-item">{{ mon }} last chance</a></li>
+                <li><a class="button
+                             {% ifequal request.path url_last %}active{% endifequal %}"
+                       href="{% url 'last' %}" class="menu-item">{{ mon }} last chance</a></li>
 
                 {% url 'monthly' as url_monthly %}
-                <li><a  class="button
-                               {% ifequal request.path url_monthly %}active{% endifequal %}"
-                        href="{% url 'monthly' %}" class="menu-item">Available in {{mon}}</a></li>
+                <li><a class="button
+                             {% ifequal request.path url_monthly %}active{% endifequal %}"
+                       href="{% url 'monthly' %}" class="menu-item">Available in {{mon}}</a></li>
 
                 {% url 'index' as url_index %}
                 {% url 'unit' unit.id as url_unit %}
-                <li><a  class="button
-                               {% ifequal request.path url_index %}active{% endifequal %}
-                               {% ifequal request.path url_unit %}active{% endifequal %}"
+                <li><a class="button
+                              {% ifequal request.path url_index %}active{% endifequal %}
+                              {% ifequal request.path url_unit %}active{% endifequal %}"
                         href="{% url 'index' %}">Encyclopedia</a></li>
             </ul>
         </nav>
