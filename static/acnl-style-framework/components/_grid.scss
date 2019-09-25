@@ -113,8 +113,10 @@ $large-grid: 12;
 }
 
 .padding{
-    padding: 0 $small-gap;
+    padding-left: $small-gap;
+    padding-right: $small-gap;
     @media(min-width:$big-screen){
-        padding: 0 $big-gap;
+        padding-left: $big-gap;
+        padding-right: $big-gap;
     }
 }

@@ -1,4 +1,16 @@
 {% extends "base/base.html" %}
 
-{% block main %}{% endblock %}
+{% block main %}
+    <h1 class="cs4 cm8 cl8 clm2">{{ page_title }}</h1>
+{% for section in sections %}
+    <section class="cs4 cm8 cl8 clm2 block">
+        <h2>{{ section.name }}</h2>
+        <section class="grid-fluid">
+            {% for unit in section.units %}
+                {% include 'include/unit-thumb.html' %}
+            {% endfor %}
+        </section>
+    </section>
+{% endfor %}
+{% endblock %}
 {% block script %}{% endblock %}

@@ -31,6 +31,11 @@ $proportion-3x2: ( 2 / 3 ) * 100%;
 $border: px-rem(2) solid $ac_gray;
 $border-radius: px-rem(8);
 
+/* Core */
+@import './components/anchor';
+@import './components/grid';
+@import './components/button';
+
 *{
     margin: 0;
     padding: 0;
@@ -52,6 +57,11 @@ html{
 
 body{
   background-image:url(../img/back/ac_back.jpg);
+  > header,
+  > main,
+  > footer{
+    padding-bottom: $big-gap;
+  }
 }
 
 a,
@@ -60,11 +70,7 @@ button{
 }
 
 /* IMPORTS */
-/* Core */
-@import './components/anchor';
-@import './components/grid';
-@import './components/button';
-
 /* Components */
 @import './components/block';
 @import './components/nav';
+@import './components/unit-thumb';
