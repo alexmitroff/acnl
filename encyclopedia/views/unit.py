@@ -1,10 +1,30 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from encyclopedia.models import Month, Unit
 from encyclopedia.views.encyclopediabase import EncyclopediaBase
 
 
 class UnitView(EncyclopediaBase):
+
+    def get(self, request, pk):
+        unit = get_object_or_404(Unit, pk=pk)
+        next_unit = Unit.objects.filter(section_id=unit.section_id, id__gt=unit.id).order_by('id').first()
+        prev_unit = Unit.objects.filter(section_id=unit.section_id, id__lt=unit.id).order_by('id').last()
+        context = {
+            'mon': self.get_current_month(),
+            'months': Month.objects.all(),
+            'rarity_range': range(0, unit.rarity),
+            'unit': unit,
+            'next': next_unit,
+            'prev': prev_unit,
+            'last': self.is_last_month(unit),
+            # Additional
+            'page_title': unit.name,
+        }
+        return render(request, 'pages/unit.html', context)
+
+
+class UnitOldView(EncyclopediaBase):
 
     def get(self, request, pk):
         unit = Unit.objects.filter(pk=pk).select_related('section').first()
@@ -19,4 +39,4 @@ class UnitView(EncyclopediaBase):
             'prev': prev_unit,
             'last': self.is_last_month(unit)
         }
-        return render(request, 'pages/unit.html', context)
+        return render(request, 'pages/unit_old.html', context)
