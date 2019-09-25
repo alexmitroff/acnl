@@ -1,0 +1,6 @@
+a{
+  color: $ac_link;
+  &:hover{
+    color: darken($ac_link, 15%);
+  }
+}

@@ -14,7 +14,7 @@ nav{
     }
     &.active{
       color: $ac_white;
-      border-color: $ac_yellow;
+      border-color: darken($ac_green, 5%);
       background-color: $ac_green;
     }
   }

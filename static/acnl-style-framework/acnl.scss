@@ -28,6 +28,7 @@ $proportion-16x9: ( 9 / 16 ) * 100%;
 $proportion-4x3: ( 3 / 4 ) * 100%;
 $proportion-3x2: ( 2 / 3 ) * 100%;
 
+$border: px-rem(2) solid $ac_gray;
 $border-radius: px-rem(8);
 
 *{
@@ -37,15 +38,16 @@ $border-radius: px-rem(8);
 }
 
 html{
-    font-size: to-px($default-font-size);
-    line-height: 1.7;
-    font-family: $default-font;
-    /*
-    font-family: -apple-system, BlinkMacSystemFont,
-                 "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-                 "Fira Sans", "Droid Sans", "Helvetica Neue",
-                 sans-serif;
-    */
+  font-size: to-px($default-font-size);
+  line-height: 1.7;
+  font-family: $default-font;
+  color: $ac_text;
+  /*
+  font-family: -apple-system, BlinkMacSystemFont,
+               "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+               "Fira Sans", "Droid Sans", "Helvetica Neue",
+               sans-serif;
+  */
 }
 
 body{
@@ -59,8 +61,10 @@ button{
 
 /* IMPORTS */
 /* Core */
+@import './components/anchor';
 @import './components/grid';
 @import './components/button';
 
 /* Components */
+@import './components/block';
 @import './components/nav';
