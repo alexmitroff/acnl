@@ -1,6 +1,6 @@
 from django.views import View
 
-from encyclopedia.core.func import get_current_month_name, get_current_month_number
+from encyclopedia.core.func import get_current_month_number
 from encyclopedia.models import Unit, Month, Section
 
 
@@ -20,6 +20,14 @@ class EncyclopediaView(View):
     @staticmethod
     def get_shown_sections():
         return Section.objects.filter(show=True).order_by('pos')
+
+    @staticmethod
+    def get_units_from_section(section):
+        return section.unit_set.all()
+
+    @staticmethod
+    def get_active_units_from_section(section):
+        return section.unit_set.filter(months__pos=get_current_month_number())
 
     def is_last_month(self, item):
         current_month = self.get_month_by_position(get_current_month_number())
@@ -53,16 +61,18 @@ class EncyclopediaView(View):
                 return True
             return False
 
-    def get_active_units_by_section(self, sections):
-        result = {}
-        active_units = self.get_active_units_by_month_number(get_current_month_number())
+    def get_active_units_list_by_section(self, sections):
+        result = []
         for section in sections:
-            section_units = active_units.filter(section=section)
-            result[section.id] = {
-                'new': [],
-                'leaving': [],
-                'normal': []
-            }
+            active_units = list(self.get_active_units_from_section(section))
+            for item in active_units:
+                if self.is_first_month(item):
+                    item.banner = 'new'
+            result.append({
+                'name': section.name,
+                'units': active_units
+            })
+        return result
 
     def last_month_unit_list(self, sections):
         l_list = []
