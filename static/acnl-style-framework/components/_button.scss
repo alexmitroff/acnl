@@ -1,0 +1,13 @@
+.button{
+  background: none;
+  border:none;
+
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border: px-rem(2) solid $ac_gray;
+  border-radius: $border-radius;
+  background-color: $ac_white;
+  text-decoration: none;
+  padding: px-rem(8) px-rem(16);
+}

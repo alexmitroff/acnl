@@ -28,6 +28,8 @@ $proportion-16x9: ( 9 / 16 ) * 100%;
 $proportion-4x3: ( 3 / 4 ) * 100%;
 $proportion-3x2: ( 2 / 3 ) * 100%;
 
+$border-radius: px-rem(8);
+
 *{
     margin: 0;
     padding: 0;
@@ -46,9 +48,19 @@ html{
     */
 }
 
+body{
+  background-image:url(../img/back/ac_back.jpg);
+}
+
+a,
+button{
+  transition: all .2s ease 0s;
+}
 
 /* IMPORTS */
 /* Core */
-//@import './components/typography';
 @import './components/grid';
-//@import './components/buttons';
+@import './components/button';
+
+/* Components */
+@import './components/nav';

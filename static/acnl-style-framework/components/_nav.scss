@@ -1,0 +1,21 @@
+nav{
+  > ul {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    list-style-type: none;
+  }
+
+  .button{
+    border-color: $ac_green;
+    color: $ac_green;
+    &:hover{
+      background-color: darken($ac_white, 5%);
+    }
+    &.active{
+      color: $ac_white;
+      border-color: $ac_yellow;
+      background-color: $ac_green;
+    }
+  }
+}
