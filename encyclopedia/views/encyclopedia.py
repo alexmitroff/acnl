@@ -4,17 +4,7 @@ from encyclopedia.core.func import slice_units_from_section
 from encyclopedia.views.encyclopediabase import EncyclopediaBase
 
 
-class IndexView(EncyclopediaBase):
-
-    def get(self, request):
-        context = {
-            'sections': self.get_shown_sections(),
-            'mon': self.get_current_month(),
-        }
-        return render(request, 'pages/index_old.html', context)
-
-
-class NewIndexView(EncyclopediaBase):
+class EncyclopediaView(EncyclopediaBase):
 
     def get(self, request):
         sections = []
