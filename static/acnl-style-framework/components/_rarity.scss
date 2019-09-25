@@ -1,0 +1,15 @@
+.rarity-2{
+  > img{
+    border-color: $ac_green;
+  }
+}
+.rarity-3{
+  > img{
+    border-color: $ac_yellow;
+  }
+}
+.rarity-4{
+  > img{
+    border-color: $ac_red;
+  }
+}

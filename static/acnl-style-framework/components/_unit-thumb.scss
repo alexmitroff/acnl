@@ -20,5 +20,19 @@
     background-color: $ac_gray;
     border: $border;
     border-radius: 50%;
+    overflow: hidden;
   }
+}
+
+.unit-banner{
+  position: absolute;
+  top:0;
+  right:0;
+  height: $small-gap;
+  display:flex;
+  align-items: center;
+  padding: 0 $small-gap/2;
+  border-radius: $small-gap/2;
+  color: $ac_white;
+  background-color: $ac_red;
 }
