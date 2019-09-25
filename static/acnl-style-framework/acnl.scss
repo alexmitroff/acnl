@@ -1,0 +1,54 @@
+@import './components/colours';
+@import './components/typography';
+
+@function to-px($num) {
+   @return $num*1px;
+}
+
+@function px-rem($num) {
+   @return $unit*$num/$default-font-size;
+}
+
+/* Breakpoints */
+$medium-bp: 600;
+$big-bp: 840;
+$large-bp: 1600;
+
+$small-screen-max: px-rem($medium-bp - 1);
+$medium-screen: px-rem($medium-bp);
+$medium-screen-max: px-rem($big-bp - 1);
+$big-screen: px-rem($big-bp);
+$big-screen-max: px-rem($large-bp - 1);
+$large-screen: px-rem($large-bp);
+
+$transition: all .2s ease-in 0s;
+
+/* Proportions */
+$proportion-16x9: ( 9 / 16 ) * 100%;
+$proportion-4x3: ( 3 / 4 ) * 100%;
+$proportion-3x2: ( 2 / 3 ) * 100%;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: to-px($default-font-size);
+    line-height: 1.7;
+    font-family: $default-font;
+    /*
+    font-family: -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+                 "Fira Sans", "Droid Sans", "Helvetica Neue",
+                 sans-serif;
+    */
+}
+
+
+/* IMPORTS */
+/* Core */
+//@import './components/typography';
+@import './components/grid';
+//@import './components/buttons';

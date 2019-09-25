@@ -1,0 +1,120 @@
+/* Grid name convention:
+    size of object: <type><screen><option><size>
+        =====================
+        type: row, column = r,c
+        screen: small(mobile), medium(tablet), large(desktop) = s,m,l
+        option: margin = m ( works only for columns )
+        size: integer, depends on screen: s 1-4, m 1-8, l 1-12
+        =====================
+        result: cl12  or cmm6
+*/
+
+$small-gap: px-rem(16);
+$big-gap: px-rem(24);
+
+$small-grid: 4;
+$medium-grid: 8;
+$large-grid: 12;
+
+$small-gap: px-rem(16);
+$big-gap: px-rem(24);
+
+$small-grid: 4;
+$medium-grid: 8;
+$large-grid: 12;
+
+.grid,
+.grid-fluid{
+    display:grid;
+    grid-template-columns: repeat($small-grid, 1fr);
+    grid-gap: $small-gap;
+    width:100%;
+    @media(min-width:$medium-screen ){
+        grid-template-columns: repeat($medium-grid, 1fr);
+    }
+    @media(min-width:$big-screen ){
+        grid-template-columns: repeat($large-grid, 1fr);
+        grid-gap: $big-gap;
+    }
+
+    /* Row collapsing rules */
+    @media(max-width:$small-screen-max){
+        $class: rs !default;
+        @for $i from 2 through $small-grid {
+           >.#{$class}#{$i}{grid-row: span $i;}
+        }
+    }
+    @media(min-width:$medium-screen) and (max-width:$medium-screen-max ){
+        $class: rm !default;
+        @for $i from 2 through $medium-grid {
+           >.#{$class}#{$i}{grid-row: span $i;}
+        }
+    }
+    @media(min-width:$big-screen) and (max-width:$big-screen-max ){
+        $class: rl !default;
+        @for $i from 2 through $large-grid {
+           >.#{$class}#{$i}{grid-row: span $i;}
+        }
+    }
+
+    /* Columns collapsing rules */
+    @mixin column-start($value) {
+        grid-column-start: $value + 1;
+    }
+    @mixin column-end($value) {
+        grid-column-end: span $value;
+    }
+
+    @media(max-width:$small-screen-max){
+        /* margins for small screens */
+        $start-class: csm !default;
+        @for $i from 1 through $small-grid - 1 {
+           >.#{$start-class}#{$i}{@include column-start($i);}
+        }
+
+        $end-class: cs !default;
+        @for $i from 2 through $small-grid {
+           >.#{$end-class}#{$i}{@include column-end($i);}
+        }
+    }
+    @media(min-width:$medium-screen) and (max-width:$medium-screen-max ){
+        /* margins for medium screens */
+        $start-class: cmm !default;
+        @for $i from 1 through $medium-grid - 1 {
+           >.#{$start-class}#{$i}{@include column-start($i);}
+        }
+
+        $end-class: cm !default;
+        @for $i from 2 through $medium-grid {
+           >.#{$end-class}#{$i}{@include column-end($i);}
+        }
+    }
+    @media(min-width:$big-screen){
+        /* margins for medium screens */
+        $start-class: clm !default;
+        @for $i from 1 through $large-grid - 1 {
+           >.#{$start-class}#{$i}{@include column-start($i);}
+        }
+
+        $end-class: cl !default;
+        @for $i from 2 through $large-grid {
+           >.#{$end-class}#{$i}{@include column-end($i);}
+        }
+    }
+
+    &.dense{
+      grid-auto-flow: dense;
+    }
+}
+
+.grid{
+    max-width: $large-screen;
+    margin: 0 auto;
+}
+
+.padding{
+    padding: 0 $small-gap;
+    @media(min-width:$big-screen){
+        padding: 0 $big-gap;
+    }
+}

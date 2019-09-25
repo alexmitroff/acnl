@@ -1,0 +1,13 @@
+@font-face {
+    font-family: ACrossingFont;
+    src: url(../../fonts/FinkHeavy.ttf);
+}
+
+@import url('https://fonts.googleapis.com/css?family=Arvo&display=swap');
+
+$unit:1rem;
+
+$default-font-size:16;
+
+$default-font: 'Arvo', serif;
+$title-font: 'ACrossingFont', sans-serif;
