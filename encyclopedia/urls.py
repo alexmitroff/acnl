@@ -5,6 +5,8 @@ from encyclopedia.views.encyclopedia import EncyclopediaView
 from encyclopedia.views.lastchanceunits import LastChanceUnitsView
 from encyclopedia.views.unit import UnitView
 
+app_name = 'encyclopedia'
+
 urlpatterns = [
     path('', LastChanceUnitsView.as_view(), name='last-chance-units'),
     path('available/', AvailableUnitsView.as_view(), name='available-units'),

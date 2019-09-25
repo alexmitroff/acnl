@@ -6,22 +6,22 @@
     <section class="cs4 cm8 cl8 clm2">
         <nav>
             <ul>
-                {% url 'last' as url_last %}
+                {% url 'encyclopedia:last-chance-units' as url_last %}
                 <li><a class="button
                              {% ifequal request.path url_last %}active{% endifequal %}"
-                       href="{% url 'last' %}" class="menu-item">{{ mon }} last chance</a></li>
+                       href="{{ url_last }}" class="menu-item">{{ mon }} last chance</a></li>
 
-                {% url 'monthly' as url_monthly %}
+                {% url 'encyclopedia:available-units' as url_available %}
                 <li><a class="button
-                             {% ifequal request.path url_monthly %}active{% endifequal %}"
-                       href="{% url 'monthly' %}" class="menu-item">Available in {{mon}}</a></li>
+                             {% ifequal request.path url_available %}active{% endifequal %}"
+                       href="{{ url_available }}" class="menu-item">Available in {{mon}}</a></li>
 
-                {% url 'index' as url_index %}
-                {% url 'unit' unit.id as url_unit %}
+                {% url 'encyclopedia:encyclopedia' as url_encyclopedia %}
+                {% url 'encyclopedia:unit' unit.id as url_unit %}
                 <li><a class="button
-                              {% ifequal request.path url_index %}active{% endifequal %}
+                              {% ifequal request.path url_encyclopedia %}active{% endifequal %}
                               {% ifequal request.path url_unit %}active{% endifequal %}"
-                        href="{% url 'index' %}">Encyclopedia</a></li>
+                        href="{{ url_encyclopedia }}">Encyclopedia</a></li>
             </ul>
         </nav>
     </section>
