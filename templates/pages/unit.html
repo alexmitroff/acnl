@@ -1,0 +1,40 @@
+{% extends "base/base.html" %}
+
+{% block main %}
+    <article class="cs4 cm8 cl8 clm2 block unit rarity-{{ unit.rarity }}">
+        <header>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'encyclopedia:encyclopedia' %}">Encyclopedia</a></li>
+                <li>{{ page_title }}</li>
+            </ul>
+        </header>
+        <main class="grid-fluid">
+            <section class="cs4 cm8 cl8 unit-description">
+                <h1 class="rarity-text-{{ unit.rarity }}">{{ page_title }}</h1>
+                <p>{{ unit.desc }}</p>
+            </section>
+            <section class="cs4 cm8 cl4 unit-side-notation">
+                <img src="{{ unit.picture }}" alt="{{ unit.name }}">
+                <ul>
+                    <li><b>Rarity:</b>
+                        {% for star in rarity_range %}
+                            <i class="fa fa-star rarity-text-{{unit.rarity}}"></i>
+                        {% endfor %}
+                    </li>
+                    <li><b>Location:</b> {{unit.location }}</li>
+                    <li><b>Price:</b> {{unit.price}} bells</li>
+                </ul>
+            </section>
+            <section class="cs4 cm8 cl8 unit-season">
+                <h2>Time of a year</h2>
+            </section>
+            <section class="cs4 cm8 cl4 unit-time">
+                <h2>Time of a day</h2>
+            </section>
+        </main>
+        <footer>
+
+        </footer>
+    </article>
+{% endblock %}
+{% block script %}{% endblock %}

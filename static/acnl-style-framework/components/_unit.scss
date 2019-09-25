@@ -1,0 +1,29 @@
+.unit-description{
+  h1{
+    font-size: px-rem(24);
+  }
+}
+
+.unit-side-notation{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  ul{
+    list-style-type: none;
+    width:100%;
+  }
+
+  img{
+    display:block;
+    width: px-rem(192);
+    height: px-rem(192);
+    object-fit: cover;
+    overflow: hidden;
+    border: $border;
+    border-width: px-rem(1);
+    border-radius: $border-radius;
+    margin-bottom: $big-gap;
+  }
+}

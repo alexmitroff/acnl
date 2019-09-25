@@ -60,5 +60,20 @@ class Unit(models.Model):
     str_time = models.TimeField('start time')
     end_time = models.TimeField('end time')
 
+    @property
+    def picture(self):
+        if self.pic:
+            return self.pic.url
+        return None
+
+    @property
+    def tortimer_island_status(self):
+        status = 'Available' if self.island else 'Unavailable'
+        return f"{status} on Tortimer's island"
+
+    @property
+    def location(self):
+        return f"{self.loc}. {self.tortimer_island_status}"
+
     def __str__(self):
         return self.name
