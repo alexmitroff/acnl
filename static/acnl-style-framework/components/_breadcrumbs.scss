@@ -1,0 +1,10 @@
+.breadcrumbs{
+  list-style-type: none;
+  display: flex;
+  > li {
+    &:not(:first-child):before{
+      margin-left: $small-gap;
+      content: '/\0020\0020';
+    }
+  }
+}
