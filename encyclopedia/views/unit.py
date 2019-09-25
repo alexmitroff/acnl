@@ -1,10 +1,10 @@
 from django.shortcuts import render
 
 from encyclopedia.models import Month, Unit
-from encyclopedia.views.encyclopedia import EncyclopediaView
+from encyclopedia.views.encyclopediabase import EncyclopediaBase
 
 
-class UnitView(EncyclopediaView):
+class UnitView(EncyclopediaBase):
 
     def get(self, request, pk):
         unit = Unit.objects.filter(pk=pk).select_related('section').first()

@@ -1,10 +1,10 @@
 from django.shortcuts import render
 
 from encyclopedia.core.func import slice_units_from_section
-from encyclopedia.views.encyclopedia import EncyclopediaView
+from encyclopedia.views.encyclopediabase import EncyclopediaBase
 
 
-class IndexView(EncyclopediaView):
+class IndexView(EncyclopediaBase):
 
     def get(self, request):
         context = {
@@ -14,7 +14,7 @@ class IndexView(EncyclopediaView):
         return render(request, 'pages/index_old.html', context)
 
 
-class NewIndexView(EncyclopediaView):
+class NewIndexView(EncyclopediaBase):
 
     def get(self, request):
         sections = []

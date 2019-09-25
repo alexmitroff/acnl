@@ -4,7 +4,7 @@ from encyclopedia.core.func import get_current_month_number
 from encyclopedia.models import Unit, Month, Section
 
 
-class EncyclopediaView(View):
+class EncyclopediaBase(View):
 
     @staticmethod
     def get_month_by_position(position):

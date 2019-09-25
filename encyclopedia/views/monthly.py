@@ -1,9 +1,9 @@
 from django.shortcuts import render
 
-from encyclopedia.views.encyclopedia import EncyclopediaView
+from encyclopedia.views.encyclopediabase import EncyclopediaBase
 
 
-class MonthlyView(EncyclopediaView):
+class MonthlyView(EncyclopediaBase):
 
     def get(self, request):
         sections = self.get_shown_sections()
