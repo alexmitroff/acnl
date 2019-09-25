@@ -30,4 +30,4 @@ class NewIndexView(EncyclopediaView):
             'page_title': 'Encyclopedia',
             'meta_description': ''
         }
-        return render(request, 'pages/index.html', context)
+        return render(request, 'pages/encyclopedia.html', context)
