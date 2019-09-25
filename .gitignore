@@ -26,7 +26,8 @@ Session.vim
 tags
 
 # Sass
+.sass-cache
 *.gen.css
-*.gen.map
+*.gen.css.map
 
 # End of https://www.gitignore.io/api/vim,django
