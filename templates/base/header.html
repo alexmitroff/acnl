@@ -1,0 +1,24 @@
+<header>
+    <section>
+        <img src="" alt="Animal Crossing New Leaf Logo">
+    </section>
+    <section>
+        <nav>
+            {% url 'last' as url_last %}
+            {% url 'monthly' as url_monthly %}
+            {% url 'index' as url_index %}
+            {% url 'unit' unit.id as url_unit %}
+            <ul class="nav nav-pills nav-justified nav-menu">
+                <li><a  class="{% ifequal request.path url_last %}active{% endifequal %}"
+                        href="{% url 'last' %}" class="menu-item">{{ mon }} last chance</a></li>
+
+                <li><a  class="{% ifequal request.path url_monthly %}active{% endifequal %}"
+                        href="{% url 'monthly' %}" class="menu-item">Available in {{mon}}</a></li>
+
+                <li><a  class="{% ifequal request.path url_index %}active{% endifequal %}
+                               {% ifequal request.path url_unit %}active{% endifequal %}"
+                        href="{% url 'index' %}">Encyclopedia</a></li>
+            </ul>
+        </nav>
+    </section>
+</header>
