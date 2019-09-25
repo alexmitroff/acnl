@@ -3,14 +3,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ meta_description }}">
     <title>{% if page_title %}{{ page_title }} |{% endif %} Animal Crossing New Leaf Encyclopedia</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/acnl.gen.css' %}" >
 </head>
 <body>
     {% include 'base/header.html' %}
-    <main>{% block main %}{% endblock %}</main>
-    <footer>{% include 'base/footer.html' %}</footer>
+    <main class="grid padding">{% block main %}{% endblock %}</main>
+    {% include 'base/footer.html' %}
     {% block script %}{% endblock %}
 </body>
 </html>
