@@ -10,9 +10,11 @@ class UnitView(EncyclopediaBase):
         unit = get_object_or_404(Unit, pk=pk)
         next_unit = Unit.objects.filter(section_id=unit.section_id, id__gt=unit.id).order_by('id').first()
         prev_unit = Unit.objects.filter(section_id=unit.section_id, id__lt=unit.id).order_by('id').last()
+        months = Month.objects.all()
+        months = self.mark_active_month(months, unit)
         context = {
             'mon': self.get_current_month(),
-            'months': Month.objects.all(),
+            'months': months,
             'rarity_range': range(0, unit.rarity),
             'unit': unit,
             'next': next_unit,
@@ -30,9 +32,11 @@ class UnitOldView(EncyclopediaBase):
         unit = Unit.objects.filter(pk=pk).select_related('section').first()
         next_unit = Unit.objects.filter(section=unit.section, id__gt=unit.id).order_by('id').first()
         prev_unit = Unit.objects.filter(section=unit.section, id__lt=unit.id).order_by('id').last()
+        months = Month.objects.all()
+        months = self.mark_active_month(months, unit)
         context = {
             'mon': self.get_current_month(),
-            'months': Month.objects.all(),
+            'months': months,
             'rarity_range': range(0, unit.rarity),
             'unit': unit,
             'next': next_unit,

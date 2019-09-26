@@ -5,6 +5,21 @@ from encyclopedia.models import Unit, Month, Section
 
 
 class EncyclopediaBase(View):
+    """Base class for encyclopedia views
+
+    public methods:
+    - get_month_by_position
+    - get_current_month
+    - get_active_units_by_month_number
+    - get_shown_sections
+    - get_units_from_section
+    - get_active_units_from_section
+    - is_last_month
+    - is_first_month
+    - get_active_units_list_by_section
+    - get_last_chance_units_list_by_section
+    - mark_active_month
+    """
 
     @staticmethod
     def get_month_by_position(position):
@@ -77,8 +92,12 @@ class EncyclopediaBase(View):
             })
         return result
 
-
-
+    @staticmethod
+    def mark_active_month(months, unit):
+        for month in months:
+            print(f'{month.name}: {unit.months.filter(pk=month.pk).exists()}')
+            month.is_active = unit.months.filter(pk=month.pk).exists()
+        return months
 
     def last_month_unit_list(self, sections):
         l_list = []

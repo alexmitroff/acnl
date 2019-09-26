@@ -1,7 +1,7 @@
 from django.db import models
+from django.urls import reverse
 
 
-# Create your models here.
 class Section(models.Model):
     pos = models.IntegerField('position', default=0)
     show = models.BooleanField('show', default=False)
@@ -74,6 +74,20 @@ class Unit(models.Model):
     @property
     def location(self):
         return f"{self.loc}. {self.tortimer_island_status}"
+
+    @property
+    def time(self):
+        start_time = self.str_time.strftime('%I:%M')
+        end_time = self.end_time.strftime('%I:%M')
+        if start_time == '00:00' and end_time == '00:00':
+            return 'All day'
+        start_time = self.str_time.strftime('%I:%M %p')
+        end_time = self.end_time.strftime('%I:%M %p')
+        return f'From {start_time} till {end_time}'
+
+    @property
+    def url(self):
+        return reverse('encyclopedia:unit', kwargs={'pk': self.id})
 
     def __str__(self):
         return self.name
