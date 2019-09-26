@@ -1,0 +1,27 @@
+.months{
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+
+  > li{
+    cursor: default;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    height: px-rem(48);
+    width: px-rem(48);
+    border:px-rem(1) solid $ac_gray;
+    border-radius: 50%;
+    margin: $small-gap/4;
+    background-color: $ac_white;
+
+    &.active{
+      box-shadow: inset px-rem(0) $small-gap/4 $small-gap/4 px-rem(0) hsla(0,0%,0%,0.50);
+      padding-top: $small-gap/4;
+    }
+  }
+
+  .spring{
+  }
+}

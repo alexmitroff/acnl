@@ -1,6 +1,25 @@
+.unit{
+  h1,h2,b{
+    color: darken($ac_gray, 15%);
+  }
+
+  > footer{
+    padding-top: $big-gap;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
 .unit-description{
   h1{
     font-size: px-rem(24);
+    > small{
+      color:$ac_white;
+      background-color: $ac_red;
+      padding: 0 $small-gap/2;
+      border-radius: $border-radius;
+      white-space: nowrap;
+    }
   }
 }
 
@@ -15,15 +34,20 @@
     width:100%;
   }
 
-  img{
+}
+.unit-shadow,
+.unit-pic{
     display:block;
     width: px-rem(192);
-    height: px-rem(192);
     object-fit: cover;
     overflow: hidden;
     border: $border;
     border-width: px-rem(1);
     border-radius: $border-radius;
     margin-bottom: $big-gap;
-  }
+}
+.unit-shadow{}
+
+.unit-pic{
+    height: px-rem(192);
 }

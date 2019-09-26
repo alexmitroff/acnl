@@ -37,8 +37,12 @@ $border-radius: px-rem(8);
 /* Core */
 @import './components/anchor';
 @import './components/grid';
+
+$box-shadow: px-rem(0) $small-gap/4 $small-gap/4 px-rem(0) hsla(0,0%,0%,0.30);
+
 @import './components/typography';
 @import './components/button';
+
 
 *{
     margin: 0;
@@ -78,7 +82,8 @@ button{
 @import './components/block';
 @import './components/breadcrumbs';
 @import './components/logo';
+@import './components/months';
 @import './components/nav';
-@import './components/unit-thumb';
 @import './components/unit';
+@import './components/unit-thumb';
 @import './components/rarity';

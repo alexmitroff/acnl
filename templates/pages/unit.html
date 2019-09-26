@@ -1,5 +1,5 @@
 {% extends "base/base.html" %}
-
+{% load static %}
 {% block main %}
     <article class="cs4 cm8 cl8 clm2 block unit rarity-{{ unit.rarity }}">
         <header>
@@ -10,16 +10,29 @@
         </header>
         <main class="grid-fluid">
             <section class="cs4 cm8 cl8 unit-description">
-                <h1 class="rarity-text-{{ unit.rarity }}">{{ page_title }}</h1>
+                <h1 class="rarity-text-{{ unit.rarity }}">{{ unit.name }} {% if last %}<small>last chance</small>{% endif %}</h1>
                 <p>{{ unit.desc }}</p>
             </section>
             <section class="cs4 cm8 cl4 unit-side-notation">
-                <img src="{{ unit.picture }}" alt="{{ unit.name }}">
+                <img class="unit-pic" src="{{ unit.picture }}" alt="{{ unit.name }}">
+                {% if unit.shadow %}
+                     {% if unit.section.name == "Fish" %}
+                        {% with 'img/shadows/shadow-'|add:unit.shadow|add:'.svg' as shadow %}
+                          <img class="unit-shadow" src="{% static shadow %}" alt="{{unit.name}} shadow in New Leaf">
+                        {% endwith %}
+                     {% else %}
+                        {% with 'img/shadows/deep-shadow-'|add:unit.shadow|add:'.svg' as deepshadow %}
+                          <img class="unit-shadow" src="{% static deepshadow %}" alt="{{unit.name}} shadow in New Leaf">
+                        {% endwith %}
+                     {% endif %}
+                {% endif %}
                 <ul>
                     <li><b>Rarity:</b>
+                        <span class="rarity-text-{{ unit.rarity }}">
                         {% for star in rarity_range %}
-                            <i class="fa fa-star rarity-text-{{unit.rarity}}"></i>
+                            &starf;
                         {% endfor %}
+                        </span>
                     </li>
                     <li><b>Location:</b> {{unit.location }}</li>
                     <li><b>Price:</b> {{unit.price}} bells</li>
@@ -27,13 +40,26 @@
             </section>
             <section class="cs4 cm8 cl8 unit-season">
                 <h2>Time of a year</h2>
+                <ul class="months">
+                    {% for month in months %}
+                        <li class="{{ month.season }}
+                        {% if month.is_active %}active{% endif %}
+                        ">{{ month.name|slice:":3" }}</li>
+                    {% endfor %}
+                </ul>
             </section>
             <section class="cs4 cm8 cl4 unit-time">
                 <h2>Time of a day</h2>
+                <p>{{ unit.time }}</p>
             </section>
         </main>
         <footer>
-
+            {% if prev %}
+                <a href="{{ prev.url }}">&larr;&nbsp;{{ prev.name }}</a>
+            {% endif %}
+            {% if next %}
+                <a href="{{ next.url }}">{{ next.name }}&nbsp;&rarr;</a>
+            {% endif %}
         </footer>
     </article>
 {% endblock %}
