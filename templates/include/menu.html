@@ -1,9 +1,0 @@
-{% url 'last' as url_last %}
-{% url 'monthly' as url_monthly %}
-{% url 'index' as url_index %}
-{% url 'unit' unit.id as url_unit %}
-      <ul class="nav nav-pills nav-justified nav-menu">
-        <li class="{% ifequal request.path url_last %}active{% endifequal %}"><a href="{% url 'last' %}" class="menu-item">{{ mon }} last chance</a></li>
-        <li class="{% ifequal request.path url_monthly %}active{% endifequal %}"><a href="{% url 'monthly' %}" class="menu-item">Available in {{mon}}</a></li>
-        <li class="{% ifequal request.path url_index %}active{% endifequal %} {% ifequal request.path url_unit %}active{% endifequal %}"><a href="{% url 'index' %}">Encyclopedia</a></li>
-      </ul>

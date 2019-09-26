@@ -99,32 +99,3 @@ class EncyclopediaBase(View):
             month.is_active = unit.months.filter(pk=month.pk).exists()
         return months
 
-    def last_month_unit_list(self, sections):
-        l_list = []
-        active_units = self.get_active_units_by_month_number(get_current_month_number())
-        for section in sections:
-            section_units = active_units.filter(section=section)
-            u_list = []
-            for item in section_units:
-                if self.is_last_month(item):
-                    u_list.append(item)
-            l_list.append(u_list)
-        return l_list
-
-    def new_unit_list(self, sections):
-        l_list = []
-        active_units = self.get_active_units_by_month_number(get_current_month_number())
-        for section in sections:
-            section_units = active_units.filter(section=section)
-            u_list = []
-            o_list = []
-            n_list = []  # new units in this month
-            for item in section_units:
-                if self.is_first_month(item):
-                    n_list.append(item)
-                else:
-                    o_list.append(item)
-            u_list.append(n_list)
-            u_list.append(o_list)
-            l_list.append(u_list)
-        return l_list

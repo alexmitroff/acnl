@@ -3,7 +3,7 @@ from django.urls import path
 from encyclopedia.views.availableunits import AvailableUnitsView
 from encyclopedia.views.encyclopedia import EncyclopediaView
 from encyclopedia.views.lastchanceunits import LastChanceUnitsView
-from encyclopedia.views.unit import UnitOldView, UnitView
+from encyclopedia.views.unit import UnitView
 
 app_name = 'encyclopedia'
 
@@ -12,5 +12,4 @@ urlpatterns = [
     path('available/', AvailableUnitsView.as_view(), name='available-units'),
     path('encyclopedia/', EncyclopediaView.as_view(), name='encyclopedia'),
     path('encyclopedia/<int:pk>/', UnitView.as_view(), name='unit'),
-    path('old/encyclopedia/<int:pk>/', UnitOldView.as_view(), name='unit-old'),
 ]
