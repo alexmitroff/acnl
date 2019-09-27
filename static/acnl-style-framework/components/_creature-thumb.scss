@@ -1,11 +1,11 @@
-.unit-thumb{
+.creature-thumb{
   font-size: px-rem(14);
   > p{
     text-align: center;
   }
 }
 
-.unit-preview{
+.creature-preview{
   display:block;
   position: relative;
   padding-top: 100%;
@@ -23,7 +23,7 @@
   }
 }
 
-.unit-banner{
+.creature-banner{
   position: absolute;
   top:0;
   right:0;
