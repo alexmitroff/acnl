@@ -1,7 +1,9 @@
 from django.views import View
 
+from creatures.models.creature import Creature
+from creatures.models.section import Section
 from encyclopedia.core.func import get_current_month_number
-from encyclopedia.models import Unit, Month, Section
+from encyclopedia.models import Month
 
 
 class EncyclopediaBase(View):
@@ -29,73 +31,72 @@ class EncyclopediaBase(View):
         return self.get_month_by_position(get_current_month_number())
 
     @staticmethod
-    def get_active_units_by_month_number(position):
-        return Unit.objects.filter(months__pos=position).order_by('pos').prefetch_related('months')
+    def get_creatures_by_month_number(position):
+        return Creature.objects.filter(months__pos=position).order_by('position').prefetch_related('months')
 
     @staticmethod
     def get_shown_sections():
         return Section.objects.filter(show=True).order_by('pos')
 
     @staticmethod
-    def get_units_from_section(section):
-        return section.unit_set.all().order_by('pos').prefetch_related('months')
+    def get_creatures_from_section(section):
+        return section.creature_set.all().order_by('pos').prefetch_related('months')
 
     @staticmethod
-    def get_active_units_from_section(section):
-        return section.unit_set.filter(months__pos=get_current_month_number())
+    def get_available_creatures_in_section(section):
+        return section.creature_set.filter(months__pos=get_current_month_number())
 
     @staticmethod
-    def is_last_month(item):
+    def is_last_month(creature):
         current_month = get_current_month_number()
         next_month = current_month + 1 if current_month < 12 else 1
-        if not item.months.filter(pos=current_month).exists():
+        if not creature.months.filter(pos=current_month).exists():
             return False
         else:
-            return not item.months.filter(pos=next_month).exists()
+            return not creature.months.filter(pos=next_month).exists()
 
     @staticmethod
-    def is_first_month(item):
+    def is_first_month(creature):
         current_month = get_current_month_number()
         prev_month = current_month - 1 if current_month > 1 else 12
-        if not item.months.filter(pos=current_month).exists():
+        if not creature.months.filter(pos=current_month).exists():
             return False
         else:
-            return not item.months.filter(pos=prev_month).exists()
+            return not creature.months.filter(pos=prev_month).exists()
 
-    def get_active_units_list_by_section(self, sections):
+    def get_all_available_creatures_by_section(self, sections):
         result = []
         for section in sections:
-            active_units = list(self.get_active_units_from_section(section))
-            new_units = []
-            old_units = []
-            for item in active_units:
-                if self.is_first_month(item):
-                    item.banner = 'new'
-                    new_units.append(item)
+            available_creatures = list(self.get_available_creatures_in_section(section))
+            new_creatures = []
+            old_creatures = []
+            for creature in available_creatures:
+                if self.is_first_month(creature):
+                    creature.banner = 'new'
+                    new_creatures.append(creature)
                 else:
-                    old_units.append(item)
+                    old_creatures.append(creature)
 
             result.append({
                 'name': section.name,
-                'units': new_units+old_units,
+                'units': new_creatures+old_creatures,
             })
         return result
 
-    def get_last_chance_units_list_by_section(self, sections):
+    def get_all_last_chance_creatures_list_by_section(self, sections):
         result = []
         for section in sections:
-            active_units = list(self.get_active_units_from_section(section))
-            last_chance_units = [item for item in active_units if self.is_last_month(item)]
+            available_creatures = list(self.get_available_creatures_in_section(section))
+            last_chance_creatures = [creature for creature in available_creatures if self.is_last_month(creature)]
             result.append({
                 'name': section.name,
-                'units': last_chance_units
+                'units': last_chance_creatures
             })
         return result
 
     @staticmethod
-    def mark_active_month(months, unit):
+    def mark_active_month(months, creature):
         for month in months:
-            print(f'{month.name}: {unit.months.filter(pk=month.pk).exists()}')
-            month.is_active = unit.months.filter(pk=month.pk).exists()
+            month.is_active = creature.months.filter(pk=month.pk).exists()
         return months
 
