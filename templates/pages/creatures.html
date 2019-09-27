@@ -6,7 +6,7 @@
     <section class="cs4 cm8 cl8 clm2 block">
         <h2>{{ page_title }}: {{ section.name }}</h2>
         <section class="grid-fluid">
-            {% for unit in section.units %}
+            {% for creature in section.creatures %}
                 {% include 'include/unit-thumb.html' %}
             {% endfor %}
         </section>

@@ -1,0 +1,9 @@
+<a class="unit-thumb cs2 cm2 cl2" href="{% url 'creatures:creature' section_slug creature.slug %}">
+    <div class="unit-preview">
+        <img class="unit-preview-pic rarity-{{creature.rarity.level}}" src="{{ creature.picture_url }}" alt="{{ creature.name }} in New Leaf">
+        {% if creature.banner %}
+        <div class="unit-banner">new</div>
+        {% endif %}
+    </div>
+    <p>{{ unit.name }}</p>
+</a>
