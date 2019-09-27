@@ -1,7 +1,8 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% block main %}
-    <article class="cs4 cm8 cl8 clm2 block creature rarity-{{ creature.rarity.level }}">
+    <article class="cs4 cm8 cl8 clm2 block creature"
+             style="border-color: {{ creature.rarity.hsl_color }}">
         <header>
             <ul class="breadcrumbs">
                 <li><a href="{% url 'encyclopedia:encyclopedia' %}">Encyclopedia</a></li>
@@ -10,7 +11,9 @@
         </header>
         <main class="grid-fluid">
             <section class="cs4 cm8 cl8 creature-description">
-                <h1 class="rarity-text-{{ creature.rarity.level }}">{{ creature.name }} {% if last %}<small>last chance</small>{% endif %}</h1>
+                <h1 style="color: {{ creature.rarity.hsl_color }}">
+                    {{ creature.name }} {% if last %}<small>last chance</small>{% endif %}
+                </h1>
                 <p>{{ creature.description }}</p>
             </section>
             <section class="cs4 cm8 cl4 creature-side-notation">
@@ -28,7 +31,7 @@
                 {% endif %}
                 <ul>
                     <li><b>Rarity:</b>
-                        <span class="rarity-text-{{ creature.rarity.level }}">
+                        <span style="color: {{ creature.rarity.hsl_color }}">
                         {% for star in rarity_range %}
                             &starf;
                         {% endfor %}
@@ -42,9 +45,10 @@
                 <h2>Time of a year</h2>
                 <ul class="months">
                     {% for month in months %}
-                        <li class="{{ month.season }}
+                        <li class="{{ month.season.name }}
                         {% if month.is_active %}active{% endif %}
-                        ">{{ month.name|slice:":3" }}</li>
+                        " {% if month.is_active %}style="background-color: {{ month.season.hsl_color }}"{% endif %}>
+                            {{ month.name|slice:":3" }}</li>
                     {% endfor %}
                 </ul>
             </section>

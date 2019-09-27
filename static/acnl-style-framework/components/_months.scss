@@ -18,7 +18,7 @@
 
     &.active{
       box-shadow: inset px-rem(0) $small-gap/4 $small-gap/4 px-rem(0) hsla(0,0%,0%,0.50);
-      padding-top: $small-gap/4;
+      color: $ac_white;
     }
   }
 

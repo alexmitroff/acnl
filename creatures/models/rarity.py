@@ -11,6 +11,10 @@ class Rarity(models.Model):
     color = models.CharField('name', max_length=100, validators=[validate_hsl_color],
                              blank=True, null=True, help_text='Example: 120,50%,50%')
 
+    @property
+    def hsl_color(self):
+        return f'hsl({self.color})'
+
     def __str__(self):
         return self.name
 

@@ -13,7 +13,7 @@ class CreatureView(EncyclopediaBase):
                                                 position__gt=creature.position).order_by('position').first()
         prev_creature = Creature.objects.filter(section__slug=section_slug,
                                                 position__lt=creature.position).order_by('position').last()
-        months = Month.objects.all()
+        months = Month.objects.all().select_related('season').order_by('pos')
         months = self.mark_active_month(months, creature)
         context = {
             'mon': self.get_current_month(),
