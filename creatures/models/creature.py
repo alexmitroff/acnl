@@ -5,12 +5,6 @@ from django.urls import reverse
 
 
 class Creature(PolymorphicModel):
-    RARITY_CHOICES = (
-        (1, 'Very Common'),
-        (2, 'Common'),
-        (3, 'Rare'),
-        (4, 'Vary Rare'),
-    )
 
     section = models.ForeignKey('creatures.Section', on_delete=models.CASCADE)
     months = models.ManyToManyField('encyclopedia.Month')
