@@ -51,4 +51,4 @@ class Creature(PolymorphicModel):
 
     @property
     def url(self):
-        return reverse('creatures:unit', kwargs={'pk': self.id})
+        return reverse('creatures:creature', kwargs={'section_slug': self.section.slug, 'creature_slug': self.slug})
