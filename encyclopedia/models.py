@@ -28,7 +28,6 @@ class Month(models.Model):
     pos = models.IntegerField('position', default=0)
     name = models.CharField('name', max_length=10)
     season = models.ForeignKey(Season, on_delete=models.CASCADE, blank=True, null=True)
-    season_old = models.CharField('season', choices=SEASON_CHOICES, max_length=7, default='winter')
 
     def __str__(self):
         return self.name
