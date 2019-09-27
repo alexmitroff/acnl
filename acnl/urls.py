@@ -6,12 +6,12 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
 
 from acnl.sitemap import EncSitemap
-from acnl.sitemap import UnitSitemap
 from acnl.sitemap import ViewSitemap
 
-sitemaps = {'views': ViewSitemap,
-            'encyclopedia':EncSitemap,
-            'units': UnitSitemap,}
+sitemaps = {
+    'views': ViewSitemap,
+    'encyclopedia': EncSitemap,
+}
 
 urlpatterns = [
     path('nook/', admin.site.urls),
@@ -21,4 +21,4 @@ urlpatterns = [
 ]
 
 urlpatterns += staticfiles_urlpatterns()
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
