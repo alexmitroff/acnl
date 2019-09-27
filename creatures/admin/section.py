@@ -4,4 +4,4 @@ from creatures.models.section import Section
 
 @admin.register(Section)
 class SectionAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'slug', 'desc')
