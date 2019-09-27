@@ -26,4 +26,4 @@ class CreatureView(EncyclopediaBase):
             # Additional
             'page_title': creature.name,
         }
-        return render(request, 'pages/unit.html', context)
+        return render(request, 'pages/creature.html', context)

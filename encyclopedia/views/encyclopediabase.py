@@ -79,7 +79,7 @@ class EncyclopediaBase(View):
 
             result.append({
                 'name': section.name,
-                'units': new_creatures+old_creatures,
+                'creatures': new_creatures+old_creatures,
             })
         return result
 
@@ -90,7 +90,7 @@ class EncyclopediaBase(View):
             last_chance_creatures = [creature for creature in available_creatures if self.is_last_month(creature)]
             result.append({
                 'name': section.name,
-                'units': last_chance_creatures
+                'creatures': last_chance_creatures
             })
         return result
 

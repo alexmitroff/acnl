@@ -17,7 +17,7 @@ def get_current_month_number():
     return d.month
 
 
-def slice_units_from_section(section, page=1, per_page=18):
+def slice_creatures_from_section(section, page=1, per_page=18):
     start_slice = per_page * (page - 1)
     end_slice = per_page * page
-    return section.unit_set.all()[start_slice:end_slice]
+    return section.creature_set.all()[start_slice:end_slice]

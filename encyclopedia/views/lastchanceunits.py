@@ -16,4 +16,4 @@ class LastChanceUnitsView(EncyclopediaBase):
             'page_title': f'{mon} last chance',
             'meta_description': ''
         }
-        return render(request, 'pages/units.html', context)
+        return render(request, 'pages/creatures.html', context)

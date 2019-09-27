@@ -16,4 +16,4 @@ class AvailableUnitsView(EncyclopediaBase):
             'page_title': f'Available in {mon}',
             'meta_description': ''
         }
-        return render(request, 'pages/units.html', context)
+        return render(request, 'pages/creatures.html', context)

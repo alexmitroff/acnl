@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from encyclopedia.core.func import slice_units_from_section
+from encyclopedia.core.func import slice_creatures_from_section
 from encyclopedia.views.encyclopediabase import EncyclopediaBase
 
 
@@ -11,7 +11,7 @@ class EncyclopediaView(EncyclopediaBase):
         for section in self.get_shown_sections():
             sections.append({
                 'name': section.name,
-                'units': slice_units_from_section(section)
+                'creatures': slice_creatures_from_section(section)
             })
         context = {
             'sections': sections,
