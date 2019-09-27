@@ -19,7 +19,7 @@ class CreatureView(EncyclopediaBase):
             'mon': self.get_current_month(),
             'months': months,
             'rarity_range': range(0, creature.rarity.level),
-            'unit': creature,
+            'creature': creature,
             'next': next_creature,
             'prev': prev_creature,
             'last': self.is_last_month(creature),

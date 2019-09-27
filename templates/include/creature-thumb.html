@@ -1,8 +1,8 @@
-<a class="unit-thumb cs2 cm2 cl2" href="{{ creature.url }}">
-    <div class="unit-preview">
-        <img class="unit-preview-pic rarity-{{creature.rarity.level}}" src="{{ creature.picture_url }}" alt="{{ creature.name }} in New Leaf">
+<a class="creature-thumb cs2 cm2 cl2" href="{{ creature.url }}">
+    <div class="creature-preview">
+        <img class="creature-preview-pic rarity-{{creature.rarity.level}}" src="{{ creature.picture_url }}" alt="{{ creature.name }} in New Leaf">
         {% if creature.banner %}
-        <div class="unit-banner">new</div>
+        <div class="creature-banner">new</div>
         {% endif %}
     </div>
     <p>{{ creature.name }}</p>

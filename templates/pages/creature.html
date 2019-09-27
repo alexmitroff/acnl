@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% block main %}
-    <article class="cs4 cm8 cl8 clm2 block unit rarity-{{ unit.rarity }}">
+    <article class="cs4 cm8 cl8 clm2 block creature rarity-{{ creature.rarity.level }}">
         <header>
             <ul class="breadcrumbs">
                 <li><a href="{% url 'encyclopedia:encyclopedia' %}">Encyclopedia</a></li>
@@ -9,36 +9,36 @@
             </ul>
         </header>
         <main class="grid-fluid">
-            <section class="cs4 cm8 cl8 unit-description">
-                <h1 class="rarity-text-{{ unit.rarity }}">{{ unit.name }} {% if last %}<small>last chance</small>{% endif %}</h1>
-                <p>{{ unit.desc }}</p>
+            <section class="cs4 cm8 cl8 creature-description">
+                <h1 class="rarity-text-{{ creature.rarity.level }}">{{ creature.name }} {% if last %}<small>last chance</small>{% endif %}</h1>
+                <p>{{ creature.description }}</p>
             </section>
-            <section class="cs4 cm8 cl4 unit-side-notation">
-                <img class="unit-pic" src="{{ unit.picture }}" alt="{{ unit.name }}">
-                {% if unit.shadow %}
-                     {% if unit.section.name == "Fish" %}
-                        {% with 'img/shadows/shadow-'|add:unit.shadow|add:'.svg' as shadow %}
-                          <img class="unit-shadow" src="{% static shadow %}" alt="{{unit.name}} shadow in New Leaf">
+            <section class="cs4 cm8 cl4 creature-side-notation">
+                <img class="creature-pic" src="{{ creature.picture_url }}" alt="{{ creature.name }}">
+                {% if creature.shadow %}
+                     {% if creature.section.name == "Fish" %}
+                        {% with 'img/shadows/shadow-'|add:creature.shadow|add:'.svg' as shadow %}
+                          <img class="creature-shadow" src="{% static shadow %}" alt="{{creature.name}} shadow in New Leaf">
                         {% endwith %}
                      {% else %}
-                        {% with 'img/shadows/deep-shadow-'|add:unit.shadow|add:'.svg' as deepshadow %}
-                          <img class="unit-shadow" src="{% static deepshadow %}" alt="{{unit.name}} shadow in New Leaf">
+                        {% with 'img/shadows/deep-shadow-'|add:creature.shadow|add:'.svg' as deepshadow %}
+                          <img class="creature-shadow" src="{% static deepshadow %}" alt="{{creature.name}} shadow in New Leaf">
                         {% endwith %}
                      {% endif %}
                 {% endif %}
                 <ul>
                     <li><b>Rarity:</b>
-                        <span class="rarity-text-{{ unit.rarity }}">
+                        <span class="rarity-text-{{ creature.rarity.level }}">
                         {% for star in rarity_range %}
                             &starf;
                         {% endfor %}
                         </span>
                     </li>
-                    <li><b>Location:</b> {{unit.location }}</li>
-                    <li><b>Price:</b> {{unit.price}} bells</li>
+                    <li><b>Location:</b> {{creature.location }}</li>
+                    <li><b>Price:</b> {{creature.price}} bells</li>
                 </ul>
             </section>
-            <section class="cs4 cm8 cl8 unit-season">
+            <section class="cs4 cm8 cl8 creature-season">
                 <h2>Time of a year</h2>
                 <ul class="months">
                     {% for month in months %}
@@ -48,9 +48,9 @@
                     {% endfor %}
                 </ul>
             </section>
-            <section class="cs4 cm8 cl4 unit-time">
+            <section class="cs4 cm8 cl4 creature-time">
                 <h2>Time of a day</h2>
-                <p>{{ unit.time }}</p>
+                <p>{{ creature.time }}</p>
             </section>
         </main>
         <footer>
