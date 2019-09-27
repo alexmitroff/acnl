@@ -7,7 +7,7 @@ from acnl.core.validators import validate_hsl_color
 class Season(models.Model):
     name = models.CharField('name', max_length=10)
     slug = models.SlugField('slug', unique=True, validators=[validate_slug])
-    color = models.CharField('name', max_length=100, validators=[validate_hsl_color],
+    color = models.CharField('color', max_length=100, validators=[validate_hsl_color],
                              blank=True, null=True, help_text='Example: 120,50%,50%')
 
     def __str__(self):
