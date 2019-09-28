@@ -16,7 +16,9 @@ sitemaps = {
 urlpatterns = [
     path('nook/', admin.site.urls),
     path('', include('encyclopedia.urls')),
-    path('', include('creatures.urls'))
+    path('', include('creatures.urls')),
+
+    path('', include('creatures.api_urls'))
     #path('sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
