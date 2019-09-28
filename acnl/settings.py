@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'encyclopedia',
     'creatures',
 ]
@@ -82,9 +83,9 @@ WSGI_APPLICATION = 'acnl.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ac_encyclopedia',
-        'USER': 'ac_admin',
-        'PASSWORD': 'acNewLeaf01',
+        'NAME': 'acnl_db',
+        'USER': 'acnl',
+        'PASSWORD': 'password1234',
         'HOST': 'localhost',
         'PORT': '',
         }
