@@ -9,6 +9,8 @@ from creatures.models.fish import Fish
 
 class CreatureInstanceAdmin(PolymorphicChildModelAdmin):
     base_model = Creature
+    list_filter = ('rarity__name',)
+    search_fields = ('name', 'section__name')
     list_display = ('name', 'section')
     show_in_index = True
 
