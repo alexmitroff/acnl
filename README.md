@@ -1,14 +1,38 @@
-<h1>Animal Crossing New Leaf Encyclopedia</h1>
-<p>This is simple django project which I use for learning markup, caching, REST & etc.</p>
+# Animal Crossing New Leaf Encyclopedia
+This is simple django project which I use to learn markup, caching, REST & etc.
 
-<h2>Requirements</h2>
-<ul>
-    <li>Python 3.*</li>
-    <li>Django</li>
-    <li>Django Rest Framework</li>
-    <li>Django-filter</li>
-    <li>Markdown</li>
-    <li>Pillow</li>
-    <li>psycopg2</li>
-    <li>Postgresql 9.*</li>
-</ul>
+## Local deploy
+
+### Create python env and clone project
+```bash
+python3.x -m venv .acnl
+source .acnl/bin/activate
+
+git clone git@gitlab.com:alexmitroff/acnl.git
+```
+
+### Restore database from sql backup
+```bash
+# Install postgres any way you wanted
+
+su - postgres
+psql
+# in postgres shell:
+create database acnl_db;
+create user acnl with password 'password1234';
+grant all privileges on database acnl_db to acnl;
+\q # or Ctrl+d
+
+psql acnl < ./acnl/database.sql
+```
+
+### Install requirements and compile styles 
+```bash
+cd acnl
+pip install -r requirements.txt
+
+# We need to generate CSS
+python manage.py compilesass 
+python manage.py runserver 0.0.0.0:8000
+```
+
