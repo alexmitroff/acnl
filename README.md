@@ -26,13 +26,13 @@ grant all privileges on database acnl_db to acnl;
 psql acnl < ./acnl/database.sql
 ```
 
-### Install requirements and compile styles 
+### Install requirements, compile styles and run development server 
 ```bash
 cd acnl
 pip install -r requirements.txt
 
 # We need to generate CSS
-python manage.py compilesass 
+python manage.py compilesass # it will generate /static/css/acnl.gen.css (minimized)
 python manage.py runserver 0.0.0.0:8000
 ```
 
