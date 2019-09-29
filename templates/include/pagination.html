@@ -1,0 +1,19 @@
+{% if section.page_range %}
+<ul class="encyclopedia-pagination">
+    {% if section.prev_page %}
+        <li><button id="{{ section.slug }}_{{ section.prev_page }}"
+                    class="pagination-nav-arrow" type="button">&larr;</button></li>
+    {% endif %}
+
+    {% for page in section.page_range %}
+        <li><button id="{{ section.slug }}_{{ page }}"
+                    {% if page == section.current_page %}class="active"{% endif %}
+                    type="button">&bullet;</button></li>
+    {% endfor %}
+
+    {% if section.next_page %}
+        <li><button id="{{ section.slug }}_{{ section.next_page }}"
+                    class="pagination-nav-arrow" type="button">&rarr;</button></li>
+    {% endif %}
+</ul>
+{% endif %}

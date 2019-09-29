@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.views import View
 
 from creatures.models.creature import Creature
@@ -99,4 +100,8 @@ class EncyclopediaBase(View):
         for month in months:
             month.is_active = creature.months.filter(pk=month.pk).exists()
         return months
+
+    @staticmethod
+    def get_creature_paginator(creatures, per_page=18):
+        return Paginator(creatures, per_page)
 

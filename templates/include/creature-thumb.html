@@ -1,3 +1,4 @@
+{% for creature in creatures %}
 <a class="creature-thumb cs2 cm2 cl2" href="{{ creature.url }}">
     <div class="creature-preview">
         <img class="creature-preview-pic"
@@ -9,3 +10,4 @@
     </div>
     <p>{{ creature.name }}</p>
 </a>
+{% endfor %}

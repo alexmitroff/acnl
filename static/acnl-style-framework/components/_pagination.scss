@@ -1,0 +1,29 @@
+.encyclopedia-pagination{
+  padding-top: $small-gap;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > li{
+    margin: $small-gap/8;
+  }
+
+  button{
+    border:none;
+    background: none;
+    cursor: pointer;
+    color: hsla(0,0%,0%,.1);
+    transition: $transition;
+    font-size: px-rem(20);
+    &:hover{
+      color: hsla(0,0%,0%,.3);
+    }
+    &.active{
+      color: hsla(0,0%,0%,.5);
+    }
+    &.pagination-nav-arrow{
+      color: hsla(0,0%,0%,.5);
+    }
+  }
+}
