@@ -12,4 +12,27 @@
     </section>
 {% endfor %}
 {% endblock %}
-{% block script %}{% endblock %}
+
+{% block script %}
+<script>
+function get_page (el) {
+    let [ section, page ] = el.dataset.id.split('_'),
+        url = '/api/creatures/creature/thumb/page/',
+        data = `?section=${encodeURIComponent(section)}&page=${encodeURIComponent(page)}`;
+
+    fetch(url+data)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(myJson) {
+            let block = document.getElementById(myJson.block);
+            block.innerHTML = myJson.creatures;
+
+            let pagination = document.querySelector(`#${myJson.block}+.encyclopedia-pagination`);
+            pagination.outerHTML = myJson.pagination;
+        }).catch(function(e){
+            console.log(e);
+    });
+}
+</script>
+{% endblock %}
