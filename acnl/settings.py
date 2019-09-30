@@ -86,8 +86,9 @@ DATABASES = {
         'NAME': 'acnl_db',
         'USER': 'acnl',
         'PASSWORD': 'password1234',
-        'HOST': 'localhost',
-        'PORT': '',
+        # 'HOST': 'localhost',
+        'HOST': 'db',
+        'PORT': '5432',
         }
 }
 
