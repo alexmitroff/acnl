@@ -12,6 +12,20 @@ git clone git@gitlab.com:alexmitroff/acnl.git
 ```
 
 ### Restore database from sql backup
+settings.py:
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'acnl_db',
+        'USER': 'acnl',
+        'PASSWORD': 'password1234',
+        'HOST': 'localhost',
+        'PORT': '',
+        }
+}
+```
+terminal:
 ```bash
 # Install postgres any way you wanted
 

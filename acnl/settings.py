@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'acnl.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'acnl_db',
         'USER': 'acnl',
         'PASSWORD': 'password1234',
