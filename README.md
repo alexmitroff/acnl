@@ -1,7 +1,16 @@
 # Animal Crossing New Leaf Encyclopedia
 This is simple django project which I use to learn markup, caching, REST & etc.
 
-## Local deploy
+**Table of content**
+- [Local deploy without docker-compose](#local-deploy-without-docker-compose)
+  - [Create python env and clone project](#create-python-env-and-clone-project)
+  - [Restore database from sql backup](#restore-database-from-sql-backup)
+  - [Install requirements, compile styles and run development server ](#install-requirements-compile-styles-and-run-development-server )
+- [Local deploy with docker-compose](#local-deploy-with-docker-compose)
+  - [Restore database from sql backup](#restore-database-from-sql-backup-2)
+
+
+## Local deploy without docker-compose
 
 ### Create python env and clone project
 ```bash
@@ -28,15 +37,16 @@ DATABASES = {
 terminal:
 ```bash
 # Install postgres any way you wanted
-
+# log in as postgres user
 su - postgres
+# enter postgres shell
 psql
 # in postgres shell:
 create database acnl_db;
 create user acnl with password 'password1234';
 grant all privileges on database acnl_db to acnl;
 \q # or Ctrl+d
-
+# restore from sql file
 psql acnl < ./acnl/database.sql
 ```
 
@@ -50,3 +60,35 @@ python manage.py compilesass # it will generate /static/css/acnl.gen.css (minimi
 python manage.py runserver 0.0.0.0:8000
 ```
 
+## Local deploy with docker-compose
+
+### Restore database from sql backup
+part of docker-compose:
+```yaml
+services:
+  db:
+    image: "postgres:11"
+    container_name: "acnl_postgres"
+    ports:
+      - "54320:5432"
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+
+volumes:
+  dbdata:
+```
+
+terminal:
+```bash
+# enter postgres shell
+sudo docker exec -it acnl_postgres psql -U postgres
+
+# in postgres shell:
+create database acnl_db;
+create user acnl with password 'password1234';
+grant all privileges on database acnl_db to acnl;
+\q # or Ctrl+d
+
+# restore from sql file
+cat ./database.sql | sudo docker exec -i acnl_postgres psql -U acnl -d acnl_db 
+```
