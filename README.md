@@ -21,6 +21,21 @@ git clone git@gitlab.com:alexmitroff/acnl.git
 ```
 
 ### Restore database from sql backup
+terminal:
+```bash
+# Install postgres any way you wanted
+# log in as postgres user
+su - postgres
+# enter the postgres shell
+psql
+# in postgres shell:
+create database acnl_db;
+create user acnl with password 'password1234';
+grant all privileges on database acnl_db to acnl;
+\q # or Ctrl+d
+# restore from sql file
+psql acnl < ./acnl/database.sql
+```
 settings.py:
 ```python
 DATABASES = {
@@ -34,22 +49,6 @@ DATABASES = {
         }
 }
 ```
-terminal:
-```bash
-# Install postgres any way you wanted
-# log in as postgres user
-su - postgres
-# enter postgres shell
-psql
-# in postgres shell:
-create database acnl_db;
-create user acnl with password 'password1234';
-grant all privileges on database acnl_db to acnl;
-\q # or Ctrl+d
-# restore from sql file
-psql acnl < ./acnl/database.sql
-```
-
 ### Install requirements, compile styles and run development server 
 ```bash
 cd acnl
@@ -77,10 +76,9 @@ services:
 volumes:
   dbdata:
 ```
-
 terminal:
 ```bash
-# enter postgres shell
+# enter the postgres shell
 sudo docker exec -it acnl_postgres psql -U postgres
 
 # in postgres shell:
@@ -91,4 +89,17 @@ grant all privileges on database acnl_db to acnl;
 
 # restore from sql file
 cat ./database.sql | sudo docker exec -i acnl_postgres psql -U acnl -d acnl_db 
+```
+settings.py:
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'acnl_db',
+        'USER': 'acnl',
+        'PASSWORD': 'password1234',
+        'HOST': 'db',
+        'PORT': '5432',
+        }
+}
 ```
