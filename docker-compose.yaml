@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: "postgres:11"
+    container_name: "acnl_postgres"
+    ports:
+      - "54320:5432"
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  dbdata:
