@@ -1,7 +1,14 @@
 version: '3'
 
+
+volumes:
+  dbdata:
+  media:
+  static:
+  logs:
+
 services:
-  db:
+  postgres:
     image: "postgres:11"
     container_name: "acnl_postgres"
     ports:
@@ -9,15 +16,16 @@ services:
     volumes:
       - "dbdata:/var/lib/postgresql/data"
 
-  web:
+  django:
+    container_name: "acnl_django"
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: bash dev-run.bash
     volumes:
       - .:/code
+      - media:/var/www/django/acnl/media
+      - static:/var/www/django/acnl/static
+      - logs:/var/www/django/acnl/logs
     ports:
       - "8000:8000"
     depends_on:
-      - db
-
-volumes:
-  dbdata:
+      - postgres

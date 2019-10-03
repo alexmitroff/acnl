@@ -49,7 +49,7 @@ DATABASES = {
         }
 }
 ```
-### Install requirements, compile styles and run development server 
+### Install requirements, compile styles and run development server
 ```bash
 cd acnl
 pip install -r requirements.txt
@@ -65,7 +65,7 @@ python manage.py runserver 0.0.0.0:8000
 part of docker-compose:
 ```yaml
 services:
-  db:
+  postgres:
     image: "postgres:11"
     container_name: "acnl_postgres"
     ports:
@@ -88,7 +88,7 @@ grant all privileges on database acnl_db to acnl;
 \q # or Ctrl+d
 
 # restore from sql file
-cat ./database.sql | sudo docker exec -i acnl_postgres psql -U acnl -d acnl_db 
+cat ./database.sql | sudo docker exec -i acnl_postgres psql -U acnl -d acnl_db
 ```
 settings.py:
 ```python
@@ -98,7 +98,7 @@ DATABASES = {
         'NAME': 'acnl_db',
         'USER': 'acnl',
         'PASSWORD': 'password1234',
-        'HOST': 'db',
+        'HOST': 'postgres',
         'PORT': '5432',
         }
 }
