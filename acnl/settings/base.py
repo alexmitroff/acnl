@@ -22,7 +22,6 @@ BASE_DIR = os.path.dirname(
           )
 
 STAT_DIR = os.path.join(BASE_DIR, "static")
-STAT_ROOT = "/home/alex/static/acnl"
 MEDI_DIR = os.path.join(BASE_DIR, "media")
 TEMPL_DIR = os.path.join(BASE_DIR, "templates")
 
@@ -83,22 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'acnl.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'acnl_db',
-        'USER': 'acnl',
-        'PASSWORD': 'password1234',
-        # 'HOST': 'localhost',
-        'HOST': 'postgres',
-        'PORT': '5432',
-        }
-}
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -137,7 +120,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (STAT_DIR,)
-STATIC_ROOT = STAT_ROOT
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = MEDI_DIR
