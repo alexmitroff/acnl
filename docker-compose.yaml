@@ -1,0 +1,32 @@
+version: '3'
+
+volumes:
+  dbdata:
+  media:
+  static:
+  logs:
+
+services:
+  postgres:
+    image: "postgres:11"
+    container_name: "acnl_postgres"
+    ports:
+      - "54320:5432"
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+
+  django:
+    container_name: "acnl_django"
+    build:
+      context: .
+      dockerfile: docker/acnl_django/Dockerfile
+    command: bash docker/acnl_django/dev-run.bash
+    volumes:
+      - .:/code
+      - media:/var/www/django/acnl/media
+      - static:/var/www/django/acnl/static
+      - logs:/var/www/django/acnl/logs
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres

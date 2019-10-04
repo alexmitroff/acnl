@@ -1,6 +1,5 @@
 version: '3'
 
-
 volumes:
   dbdata:
   media:
@@ -18,8 +17,10 @@ services:
 
   django:
     container_name: "acnl_django"
-    build: .
-    command: bash dev-run.bash
+    build:
+      context: .
+      dockerfile: ./acnl_django/Dockerfile
+    command: bash ./acnl_django/prod-run.bash
     volumes:
       - .:/code
       - media:/var/www/django/acnl/media
@@ -29,3 +30,14 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
+
+  nginx:
+    container_name: "acnl_nginx"
+    build:
+      context: .
+      dockerfile: ./acnl_nginx/Dockerfile
+    volumes:
+      - .:/code
+      - media:/var/www/django/acnl/media
+      - static:/var/www/django/acnl/static
+      - logs:/var/www/django/acnl/logs
