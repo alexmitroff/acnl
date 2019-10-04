@@ -2776,6 +2776,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 23	encyclopedia	0003_auto_20190927_1800	2019-09-27 18:09:02.039695+03
 24	encyclopedia	0004_auto_20190927_1811	2019-09-27 18:27:08.577347+03
 25	encyclopedia	0005_remove_month_season_old	2019-09-27 18:32:37.620271+03
+26	encyclopedia	0006_auto_20191004_1618	2019-10-04 16:19:02.270501+03
 \.
 
 
@@ -2937,7 +2938,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 18, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: acnl
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 25, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 26, true);
 
 
 --
