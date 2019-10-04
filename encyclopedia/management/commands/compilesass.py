@@ -1,9 +1,9 @@
-from django.core.management.base import BaseCommand
-
 import os
 
-from acnl.settings import BASE_DIR, STAT_DIR
 import sass
+from django.core.management.base import BaseCommand
+
+from acnl.settings.base import STAT_DIR
 
 SCSS_FILE_PREFIX = 'scss'
 CSS_FILE_PREFIX = 'gen.css'
