@@ -78,8 +78,9 @@ volumes:
 ```
 terminal:
 ```bash
+docker-compose up -d
 # enter the postgres shell
-sudo docker exec -it acnl_postgres psql -U postgres
+docker exec -it acnl_postgres psql -U postgres
 
 # in postgres shell:
 create database acnl_db;
@@ -89,6 +90,7 @@ grant all privileges on database acnl_db to acnl;
 
 # restore from sql file
 cat ./database.sql | sudo docker exec -i acnl_postgres psql -U acnl -d acnl_db
+docker-compose down
 ```
 settings.py:
 ```python
@@ -102,4 +104,36 @@ DATABASES = {
         'PORT': '5432',
         }
 }
+```
+
+### Run development server
+```bash
+docker-compose up
+```
+
+### Run production server
+Specify **acnl/settings/prod.py:**
+```python
+from acnl.settings.base import *
+
+DEBUG = False
+
+ALLOWED_HOSTS = ['mydomain.here']
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'acnl_db',
+        'USER': 'acnl',
+        'PASSWORD': 'password1234',
+        'HOST': 'postgres',
+        'PORT': '5432',
+        }
+}
+
+STATIC_ROOT = "/var/www/django/acnl/static"
+MEDIA_ROOT = "/var/www/django/acnl/media"
+```
+```bash
+docker-compose -f prodaction.yaml up
 ```
