@@ -15,4 +15,7 @@ else
 fi
 
 python manage.py compilesass
+
 python manage.py collectstatic --noinput
+
+gunicorn -w 4 acnl.wsgi -b 0.0.0.0:8000

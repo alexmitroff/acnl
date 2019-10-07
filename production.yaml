@@ -2,9 +2,9 @@ version: '3'
 
 volumes:
   dbdata:
-  media:
-  static:
-  logs:
+  media_files:
+  static_files:
+  log_files:
 
 services:
   postgres:
@@ -13,21 +13,23 @@ services:
     ports:
       - "54320:5432"
     volumes:
-      - "dbdata:/var/lib/postgresql/data"
+      - dbdata:/var/lib/postgresql/data
 
   django:
     container_name: "acnl_django"
     build:
       context: .
-      dockerfile: ./acnl_django/Dockerfile
-    command: bash ./acnl_django/prod-run.bash
+      dockerfile: ./docker/acnl_django/Dockerfile
+    environment:
+      - DJANGO_SETTINGS_MODULE=acnl.settings.prod
+    command: bash ./docker/acnl_django/prod-run.bash
     volumes:
       - .:/code
       - media_files:/var/www/django/acnl/media
       - static_files:/var/www/django/acnl/static
-      - logs:/var/www/django/acnl/logs
+      - log_files:/var/www/django/acnl/logs
     ports:
-      - "8000:8000"
+      - 8000:8000
     depends_on:
       - postgres
 
@@ -35,9 +37,12 @@ services:
     container_name: "acnl_nginx"
     build:
       context: .
-      dockerfile: ./acnl_nginx/Dockerfile
+      dockerfile: ./docker/acnl_nginx/Dockerfile
     volumes:
-      - .:/code
       - media_files:/var/www/django/acnl/media
       - static_files:/var/www/django/acnl/static
-      - logs:/var/www/django/acnl/logs
+      - log_files:/var/www/django/acnl/logs
+    ports:
+      - 80:80
+    depends_on:
+      - django
