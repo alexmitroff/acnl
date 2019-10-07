@@ -5,3 +5,6 @@ WORKDIR /source
 COPY requirements.txt /source/
 RUN pip install -r requirements.txt
 COPY . /source/
+VOLUME /var/www/django/acnl/media
+RUN unzip ./units.zip -d /var/www/django/acnl/media
+
