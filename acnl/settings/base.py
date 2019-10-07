@@ -122,3 +122,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (STAT_DIR,)
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = "/var/www/django/acnl/media"
