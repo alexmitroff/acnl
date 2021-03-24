@@ -3,7 +3,7 @@ stages:
     - deploy
 
 # This file is a template, and might need editing before it works on your project.
-build-staging-image:
+.build-staging-image:
   # Official docker image.
   image: docker:latest
   stage: build
@@ -26,7 +26,7 @@ deploy-staging-image:
     - eval $(ssh-agent -s)
   script:
     - echo 'Send docker-compose to server'
-#    - rsync --verbose --no-perms --chmod=D0700,F0700 --rsh="sshpass -e ssh -o StrictHostKeyChecking=no" ./production.yaml $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/deploy/docker-compose.yaml
+    - rsync -rv --verbose --no-perms --chmod=D0700,F0700 --rsh="sshpass -e ssh -o StrictHostKeyChecking=no" ./production.yaml $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/deploy/docker-compose.yaml
   only:
     - master
 
