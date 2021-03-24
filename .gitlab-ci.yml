@@ -9,11 +9,15 @@ docker-build-master:
   services:
     - docker:dind
   before_script:
+    - apt-get update -y
+    - apt-get install -y rsync sshpass
+    - export SSHPASS=$SSH_ACNL_PSWD
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     # - docker build --pull -t "$CI_REGISTRY_IMAGE" .
     # - docker push "$CI_REGISTRY_IMAGE"
     - echo 'CI/CD start'
+#    - rsync --verbose --no-perms --chmod=D0700,F0700 --rsh="sshpass -e ssh -o StrictHostKeyChecking=no" ./production.yaml $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/deploy/docker-compose.yaml
   only:
     - master
 
