@@ -10,11 +10,12 @@ stages:
   services:
     - docker:dind
   before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
-    # - docker build --pull -t "$CI_REGISTRY_IMAGE" .
-    # - docker push "$CI_REGISTRY_IMAGE"
-    - echo 'CI/CD start'
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" -f ./docker/acnl_django/Dockerfile .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+    - docker build --pull -t "custom_nginx:$CI_COMMIT_REF_SLUG" -f ./docker/nginx_django/Dockerfile .
+    - docker push "custom_nginx:$CI_COMMIT_REF_SLUG"
   only:
     - master
 
