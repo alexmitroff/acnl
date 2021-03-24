@@ -24,6 +24,7 @@ deploy-staging-image:
   before_script:
     - 'which ssh-agent || ( apt update -y && apt install openssh-client rsync sshpass -y )'
     - eval $(ssh-agent -s)
+    - export SSHPASS=$SSH_ACNL_PSWD
   script:
     - echo 'Send docker-compose to server'
     - rsync -rv --verbose --no-perms --chmod=D0700,F0700 --rsh="sshpass -e ssh -o StrictHostKeyChecking=no" ./production.yaml $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/deploy/docker-compose.yaml
