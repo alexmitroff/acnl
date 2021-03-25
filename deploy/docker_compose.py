@@ -53,7 +53,7 @@ class DockerCompose:
         self.volumes[static_volume_name] = None
         self.volumes[logs_volume_name] = None
         self.services[self.webserver_service_name] = {
-            'image': f'{self.docker_image_name}_nginx:{self.docker_tag_slug}/',
+            'image': f'{self.docker_image_name}_nginx:{self.docker_tag_slug}',
             'container_name': f'{self.project_name}_{self.webserver_service_name}',
             'ports': ['80:80'],
             'volumes': [
