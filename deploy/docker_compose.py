@@ -1,5 +1,3 @@
-from collections import OrderedDict
-
 import yaml
 
 
@@ -77,6 +75,11 @@ class DockerCompose:
         data_yaml += yaml.dump({'services': self.services})
         return data_yaml
 
-    def as_file(self):
+    def get_inmemory_file(self):
         import io
         return io.StringIO(self.render().replace('null', ''))
+
+    def write_file(self, name='docker-compose', path='.'):
+        with open(f'{path}/{name}.yaml', 'w+') as f:
+            f.write(self.get_inmemory_file().getvalue())
+            f.close()
