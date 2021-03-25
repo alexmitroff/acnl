@@ -29,6 +29,9 @@ deploy-staging-image:
   script:
     - echo 'Send docker-compose to server'
     - rsync -rv --verbose --no-perms --chmod=D0700,F0700 --rsh="sshpass -e ssh -o StrictHostKeyChecking=no" ./production.yaml $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/deploy/docker-compose.yaml
+    - echo "$CI_REGISTRY"
+    - echo "$CI_REGISTRY_IMAGE"
+    - echo "$CI_COMMIT_REF_SLUG"
   only:
     - master
 
