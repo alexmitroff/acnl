@@ -2,7 +2,7 @@ import yaml
 
 
 class DockerCompose:
-    def __init__(self, version=3, project_name='acnl',
+    def __init__(self, version='3', project_name='acnl',
                  docker_image_name='acnl', docker_tag_slug='test'):
         self.version = version
         self.volumes = {}
