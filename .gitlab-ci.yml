@@ -27,23 +27,23 @@ deploy-staging-image:
     - apt install openssh-client rsync sshpass -y
     - eval $(ssh-agent -s)
 
-#    - echo "$SSH_ACNL_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - echo "$SSH_ACNL_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $SSH_ACNL_SERVER >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
-    - echo "$SSH_ACNL_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
-    - ls -l ~/.ssh/
+#    - ssh-keyscan $SSH_ACNL_SERVER >> ~/.ssh/known_hosts
+#    - chmod 644 ~/.ssh/known_hosts
+#    - echo "$SSH_ACNL_PRIVATE_KEY" > ~/.ssh/id_rsa
+#    - echo "$SSH_ACNL_PUBLIC_KEY" > ~/.ssh/id_rsa.pub
+#    - chmod 600 ~/.ssh/id_rsa
+#    - ls -l ~/.ssh/
 
     - export SSHPASS=$SSH_ACNL_PSWD
     - pip install pyyaml
   script:
     - echo 'Send docker-compose to server'
-#    - python ./generate_docker_compose.py -p acnl -i $CI_REGISTRY_IMAGE -t $CI_COMMIT_REF_SLUG
-#    - rsync -rv --verbose --no-perms --chmod=D0700,F0700 --rsh="sshpass -e ssh -o StrictHostKeyChecking=no" ./production.gen.yaml $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/deploy/docker-compose.yaml
-    - ssh $SSH_ACNL_USER@$SSH_ACNL_SERVER
-#    - ssh $SSH_ACNL_USER@$SSH_ACNL_SERVER "cd /home/$SSH_ACNL_USER/deploy; cat docker-compose.yaml;"
+    - python ./generate_docker_compose.py -p acnl -i $CI_REGISTRY_IMAGE -t $CI_COMMIT_REF_SLUG
+    - rsync -rv --verbose --no-perms --chmod=D0700,F0700 --rsh="sshpass -e ssh -o StrictHostKeyChecking=no" ./production.gen.yaml $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/deploy/docker-compose.yaml
+    - ssh -o StrictHostKeyChecking=no $SSH_ACNL_USER@$SSH_ACNL_SERVER "cd /home/$SSH_ACNL_USER/deploy; cat docker-compose.yaml;"
   only:
     - master
 
