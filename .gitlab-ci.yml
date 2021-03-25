@@ -32,6 +32,7 @@ deploy-staging-image:
     - chmod 700 ~/.ssh
     - ssh-keyscan $SSH_ACNL_SERVER >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
+    - echo "$SSH_ACNL_PRIVATE_KEY" > ~/.ssh/id_rsa
     - ls -l ~/.ssh/
     - cat ~/.ssh/id_rsa
 
