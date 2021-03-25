@@ -30,7 +30,7 @@ deploy-staging-image:
     - echo "$SSH_ACNL_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - ssh-keyscan $SSH_ACNL_SERVER >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
     - export SSHPASS=$SSH_ACNL_PSWD
@@ -39,7 +39,7 @@ deploy-staging-image:
     - echo 'Send docker-compose to server'
     - python ./generate_docker_compose.py -p acnl -i $CI_REGISTRY_IMAGE -t $CI_COMMIT_REF_SLUG
     - rsync -rv --verbose --no-perms --chmod=D0700,F0700 --rsh="sshpass -e ssh -o StrictHostKeyChecking=no" ./production.gen.yaml $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/deploy/docker-compose.yaml
-    - ssh $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/deploy "cat docker-compose.yaml"
+    - ssh $SSH_ACNL_USER@$SSH_ACNL_SERVER "cd /home/$SSH_ACNL_USER/deploy; cat docker-compose.yaml;"
   only:
     - master
 
