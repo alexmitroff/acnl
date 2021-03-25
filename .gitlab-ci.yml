@@ -32,6 +32,7 @@ deploy-staging-image:
     - chmod 700 ~/.ssh
     - ssh-keyscan $SSH_ACNL_SERVER >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
+    - ls -l ~/.ssh/
     - cat ~/.ssh/id_rsa
 
     - export SSHPASS=$SSH_ACNL_PSWD
