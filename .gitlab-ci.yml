@@ -24,7 +24,7 @@ deploy-staging-image:
   stage: deploy
   before_script:
     - apt update -y
-    - apt install openssh-client rsync sshpass -y )'
+    - apt install openssh-client rsync sshpass -y
     - eval $(ssh-agent -s)
     - export SSHPASS=$SSH_ACNL_PSWD
     - pip install pyyaml
