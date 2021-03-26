@@ -12,9 +12,9 @@ build-staging-image:
   before_script:
     - echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" -f ./docker/acnl_django/Dockerfile .
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" -f ./deploy/acnl_django/Dockerfile .
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-    - docker build --pull -t "${CI_REGISTRY_IMAGE}_nginx:$CI_COMMIT_REF_SLUG" -f ./docker/nginx_django/Dockerfile .
+    - docker build --pull -t "${CI_REGISTRY_IMAGE}_nginx:$CI_COMMIT_REF_SLUG" -f ./deploy/nginx_django/Dockerfile .
     - docker push "${CI_REGISTRY_IMAGE}_nginx:$CI_COMMIT_REF_SLUG"
   only:
     - master
