@@ -27,8 +27,8 @@ class DockerCompose:
         }
 
     def add_project(self):
-        media_volume_name = 'media_files'
-        static_volume_name = 'static_files'
+        media_volume_name = f'{self.docker_tag_slug}_media_files'
+        static_volume_name = f'{self.docker_tag_slug}_static_files'
         logs_volume_name = 'log_files'
         self.volumes[media_volume_name] = []
         self.volumes[static_volume_name] = []
