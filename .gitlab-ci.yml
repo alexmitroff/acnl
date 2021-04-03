@@ -14,12 +14,10 @@ build-staging-image:
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" -f ./deploy/acnl_django/Dockerfile .
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-    - docker build --pull -t "${CI_REGISTRY_IMAGE}_nginx:$CI_COMMIT_REF_SLUG" -f ./deploy/acnl_nginx/Dockerfile .
-    - docker push "${CI_REGISTRY_IMAGE}_nginx:$CI_COMMIT_REF_SLUG"
   only:
     - master
 
-.deploy-staging-image:
+deploy-staging-image:
   image: python:3.8
   stage: deploy
   before_script:
@@ -31,8 +29,8 @@ build-staging-image:
   script:
     - echo 'Send docker-compose to server'
     - python ./generate_docker_compose.py -p acnl -i $CI_REGISTRY_IMAGE -t $CI_COMMIT_REF_SLUG
-    - rsync -rv --verbose --no-perms --chmod=D0700,F0700 --rsh="sshpass -e ssh -o StrictHostKeyChecking=no" ./production.gen.yaml $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/deploy/docker-compose.yaml
-    - sshpass -e ssh -o StrictHostKeyChecking=no $SSH_ACNL_USER@$SSH_ACNL_SERVER "cd /home/$SSH_ACNL_USER/deploy; echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY; docker-compose pull; docker-compose up -d;"
+    - rsync -rv --verbose --no-perms --chmod=D0700,F0700 --rsh="sshpass -e ssh -o StrictHostKeyChecking=no" ./production.gen.yaml $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/acnl/docker-compose.yaml
+    - sshpass -e ssh -o StrictHostKeyChecking=no $SSH_ACNL_USER@$SSH_ACNL_SERVER "cd /home/$SSH_ACNL_USER/acnl; echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY; docker-compose pull; docker-compose up -d;"
   only:
     - master
 
