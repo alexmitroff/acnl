@@ -30,9 +30,9 @@ class DockerCompose:
         media_volume_name = f'{self.docker_tag_slug}_media_files'
         static_volume_name = f'{self.docker_tag_slug}_static_files'
         logs_volume_name = 'log_files'
-        self.volumes[media_volume_name] = []
-        self.volumes[static_volume_name] = []
-        self.volumes[logs_volume_name] = []
+        self.volumes[media_volume_name] = None
+        self.volumes[static_volume_name] = None
+        self.volumes[logs_volume_name] = None
         self.services[self.project_service_name] = {
             'image': f'{self.docker_image_name}:{self.docker_tag_slug}',
             'container_name': f'{self.project_name}_{self.project_service_name}_{self.docker_tag_slug}',
@@ -46,8 +46,8 @@ class DockerCompose:
         }
 
     def add_webserver(self):
-        media_volume_name = 'media_files'
-        static_volume_name = 'static_files'
+        media_volume_name = f'{self.docker_tag_slug}_media_files'
+        static_volume_name = f'{self.docker_tag_slug}_static_files'
         logs_volume_name = 'log_files'
         self.volumes[media_volume_name] = None
         self.volumes[static_volume_name] = None
