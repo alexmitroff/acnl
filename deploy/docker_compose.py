@@ -23,7 +23,7 @@ class DockerCompose:
             'image': 'postgres:11',
             'container_name': f'{self.project_name}_{self.database_service_name}',
             'ports': ["54320:5432"],
-            'volumes': [f'{db_volume_name}: /var/lib/postgresql/data']
+            'volumes': [f'{db_volume_name}:/var/lib/postgresql/data']
         }
 
     def add_project(self):
@@ -38,9 +38,9 @@ class DockerCompose:
             'container_name': f'{self.project_name}_{self.project_service_name}_{self.docker_tag_slug}',
             'ports': ['8000:8000'],
             'volumes': [
-                f'{media_volume_name}: /var/www/django/{self.project_name}/media',
-                f'{static_volume_name}: /var/www/django/{self.project_name}/static',
-                f'{logs_volume_name}: /var/www/django/{self.project_name}/logs',
+                f'{media_volume_name}:/var/www/django/{self.project_name}/media',
+                f'{static_volume_name}:/var/www/django/{self.project_name}/static',
+                f'{logs_volume_name}:/var/www/django/{self.project_name}/logs',
             ],
             'depends_on': ['postgres']
         }
@@ -57,9 +57,9 @@ class DockerCompose:
             'container_name': f'{self.project_name}_{self.webserver_service_name}',
             'ports': ['80:80'],
             'volumes': [
-                f'{media_volume_name}: /var/www/django/{self.project_name}/media',
-                f'{static_volume_name}: /var/www/django/{self.project_name}/static',
-                f'{logs_volume_name}: /var/www/django/{self.project_name}/logs',
+                f'{media_volume_name}:/var/www/django/{self.project_name}/media',
+                f'{static_volume_name}:/var/www/django/{self.project_name}/static',
+                f'{logs_volume_name}:/var/www/django/{self.project_name}/logs',
             ],
             'depends_on': ['django']
         }
