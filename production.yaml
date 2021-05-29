@@ -22,7 +22,7 @@ services:
       dockerfile: ./docker/acnl_django/Dockerfile
     environment:
       - DJANGO_SETTINGS_MODULE=acnl.settings.prod
-    command: bash ./docker/acnl_django/prod-run.bash
+    command: bash ./deploy/acnl_django/prod-run.bash
     volumes:
       - .:/code
       - media_files:/var/www/django/acnl/media
