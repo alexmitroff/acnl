@@ -30,7 +30,7 @@ deploy-staging-image:
     - pip install pyyaml
   script:
     - echo 'Send docker-compose to server'
-    - python ./generate_docker_compose.py -p acnl -i $CI_REGISTRY_IMAGE -t $CI_COMMIT_REF_SLUG
+    - python ./generate_docker_compose.py -p acnl -i $CI_REGISTRY_IMAGE -t $CI_COMMIT_REF_SLUG --pguser $PG_AUTH_USER --pgpwd $PG_AUTH_PASSWORD
     - rsync -rv --verbose --no-perms --chmod=D0700,F0700 --rsh="sshpass -e ssh -o StrictHostKeyChecking=no" ./production.gen.yaml $SSH_ACNL_USER@$SSH_ACNL_SERVER:/home/$SSH_ACNL_USER/acnl/docker-compose.yaml
     - sshpass -e ssh -o StrictHostKeyChecking=no $SSH_ACNL_USER@$SSH_ACNL_SERVER "cd /home/$SSH_ACNL_USER/acnl; echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY; docker-compose pull; docker-compose up -d;"
   only:

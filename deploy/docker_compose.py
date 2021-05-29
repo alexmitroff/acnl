@@ -3,10 +3,14 @@ import yaml
 
 class DockerCompose:
     def __init__(self, version='3', project_name='acnl',
-                 docker_image_name='acnl', docker_tag_slug='test'):
+                 docker_image_name='acnl', docker_tag_slug='test',
+                 postgres_pwd, postgres_usr):
         self.version = version
         self.volumes = {}
         self.services = {}
+
+        self.postgres_pwd = postgres_pwd
+        self.postgres_usr = postgres_usr
 
         self.project_name = project_name
         self.docker_image_name = docker_image_name
@@ -23,7 +27,11 @@ class DockerCompose:
             'image': 'postgres:11',
             'container_name': f'{self.project_name}_{self.database_service_name}',
             'ports': ["54320:5432"],
-            'volumes': [f'{db_volume_name}:/var/lib/postgresql/data']
+            'volumes': [f'{db_volume_name}:/var/lib/postgresql/data'],
+            'environment': {
+                'POSTGRES_PASSWORD': self.postgres_pwd,
+                'POSTGRES_USER': self.postgres_usr,
+            }
         }
 
     def add_project(self):
