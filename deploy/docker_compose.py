@@ -2,9 +2,11 @@ import yaml
 
 
 class DockerCompose:
-    def __init__(self, version='3', project_name='acnl',
-                 docker_image_name='acnl', docker_tag_slug='test',
-                 postgres_pwd, postgres_usr):
+    def __init__(self,
+                 postgres_pwd, postgres_usr
+                 version='3', project_name='acnl',
+                 docker_image_name='acnl', docker_tag_slug='test'
+                 ):
         self.version = version
         self.volumes = {}
         self.services = {}
