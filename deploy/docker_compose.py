@@ -3,7 +3,7 @@ import yaml
 
 class DockerCompose:
     def __init__(self,
-                 postgres_pwd, postgres_usr
+                 postgres_pwd, postgres_usr,
                  version='3', project_name='acnl',
                  docker_image_name='acnl', docker_tag_slug='test'
                  ):
