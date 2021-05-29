@@ -47,6 +47,10 @@ class DockerCompose:
             'image': f'{self.docker_image_name}:{self.docker_tag_slug}',
             'container_name': f'{self.project_name}_{self.project_service_name}_{self.docker_tag_slug}',
             'ports': ['8000:8000'],
+            'environment': {
+                'DJANGO_SETTINGS_MODULE': 'acnl.settings.prod',
+            },
+            'command': 'bash ./docker/acnl_django/prod-run.bash',
             'volumes': [
                 f'{media_volume_name}:/var/www/django/{self.project_name}/media',
                 f'{static_volume_name}:/var/www/django/{self.project_name}/static',
