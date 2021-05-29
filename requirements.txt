@@ -15,3 +15,6 @@ psycopg2-binary==2.8.6
 
 # Generate docker-compose
 pyyaml==5.4.1
+
+# Server run
+gunicorn==20.1.0

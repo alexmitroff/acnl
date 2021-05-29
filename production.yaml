@@ -19,7 +19,7 @@ services:
     container_name: "acnl_django"
     build:
       context: .
-      dockerfile: ./docker/acnl_django/Dockerfile
+      dockerfile: ./deploy/acnl_django/Dockerfile
     environment:
       - DJANGO_SETTINGS_MODULE=acnl.settings.prod
     command: bash ./deploy/acnl_django/prod-run.bash
@@ -37,7 +37,7 @@ services:
     container_name: "acnl_nginx"
     build:
       context: .
-      dockerfile: ./docker/acnl_nginx/Dockerfile
+      dockerfile: ./deploy/acnl_nginx/Dockerfile
     volumes:
       - media_files:/var/www/django/acnl/media
       - static_files:/var/www/django/acnl/static
