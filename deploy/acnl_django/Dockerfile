@@ -1,9 +1,14 @@
 FROM python:3.8-alpine
 ENV PYTHONUNBUFFERED 1
 
+RUN mkdir /source
+WORKDIR /source
+COPY requirements.txt /source/
+
 RUN apk add --no-cache --virtual .build-deps \
     ca-certificates gcc postgresql-dev linux-headers musl-dev \
     libffi-dev jpeg-dev zlib-dev \
+    && pip install --upgrade pip \
     && pip install -r requirements.txt \
     && find /usr/local \
         \( -type d -a -name test -o -name tests \) \
@@ -19,9 +24,4 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk add --virtual .rundeps $runDeps \
     && apk del .build-deps
 
-RUN mkdir /source
-WORKDIR /source
-COPY requirements.txt /source/
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
 COPY . /source/
