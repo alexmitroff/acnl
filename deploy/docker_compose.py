@@ -49,7 +49,7 @@ class DockerCompose:
 
     def get_volumes_list(self):
         volumes = self.get_volumes()
-        return [f'{key}: {value}' for key, value in volumes.items()]
+        return [f'{key}:{value}' for key, value in volumes.items()]
 
     def add_database(self):
         db_volume_name = 'dbdata'
