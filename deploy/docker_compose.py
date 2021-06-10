@@ -26,6 +26,31 @@ class DockerCompose:
         self.project_service_name = 'django'
         self.webserver_service_name = 'nginx'
 
+        self.media_volume_name = f'{self.docker_tag_slug}_media_files'
+        self.static_volume_name = f'{self.docker_tag_slug}_static_files'
+        self.logs_volume_name = 'log_files'
+
+        self.project_storage_path = f'/var/www/django/{self.project_name}_{self.docker_tag_slug}'
+        self.static_files_root_path = f'{self.project_storage_path}/static'
+        self.media_files_root_path = f'{self.project_storage_path}/media'
+        self.webserver_logs_path = f'{self.project_storage_path}/logs'
+
+    def define_volumes(self):
+        self.volumes[self.media_volume_name] = None
+        self.volumes[self.static_volume_name] = None
+        self.volumes[self.logs_volume_name] = None
+
+    def get_volumes(self):
+        return {
+            self.media_volume_name: self.media_files_root_path,
+            self.static_volume_name: self.static_files_root_path,
+            self.logs_volume_name: self.webserver_logs_path,
+        }
+
+    def get_volumes_list(self):
+        volumes = self.get_volumes()
+        return [f'{key}: {value}' for key, value in volumes.items()]
+
     def add_database(self):
         db_volume_name = 'dbdata'
         self.volumes[db_volume_name] = None
@@ -41,12 +66,6 @@ class DockerCompose:
         }
 
     def add_project(self):
-        media_volume_name = f'{self.docker_tag_slug}_media_files'
-        static_volume_name = f'{self.docker_tag_slug}_static_files'
-        logs_volume_name = 'log_files'
-        self.volumes[media_volume_name] = None
-        self.volumes[static_volume_name] = None
-        self.volumes[logs_volume_name] = None
         self.services[self.project_service_name] = {
             'image': f'{self.docker_image_name}:{self.docker_tag_slug}',
             'container_name': f'{self.project_name}_{self.project_service_name}_{self.docker_tag_slug}',
@@ -57,38 +76,25 @@ class DockerCompose:
                 'DJANGO_DB_NAME': f'{self.project_name}_db',
                 'DJANGO_DB_USER': self.project_db_user,
                 'DJANGO_DB_PASS': self.project_db_pass,
-                'STATIC_ROOT_PATH': f'/var/www/django/{self.project_name}_{self.docker_tag_slug}/static/',
-                'MEDIA_ROOT_PATH': f'/var/www/django/{self.project_name}_{self.docker_tag_slug}/media/',
+                'STATIC_ROOT_PATH': f'{self.static_files_root_path}/',
+                'MEDIA_ROOT_PATH': f'{self.media_files_root_path}/',
             },
             'command': 'bash ./deploy/acnl_django/prod-run.bash',
-            'volumes': [
-                f'{media_volume_name}:/var/www/django/{self.project_name}/media',
-                f'{static_volume_name}:/var/www/django/{self.project_name}/static',
-                f'{logs_volume_name}:/var/www/django/{self.project_name}/logs',
-            ],
+            'volumes': self.get_volumes_list(),
             'depends_on': ['postgres']
         }
 
     def add_webserver(self):
-        media_volume_name = f'{self.docker_tag_slug}_media_files'
-        static_volume_name = f'{self.docker_tag_slug}_static_files'
-        logs_volume_name = 'log_files'
-        self.volumes[media_volume_name] = None
-        self.volumes[static_volume_name] = None
-        self.volumes[logs_volume_name] = None
         self.services[self.webserver_service_name] = {
             'image': f'{self.docker_image_name}:nginx',
             'container_name': f'{self.project_name}_{self.webserver_service_name}',
             'ports': ['80:80'],
-            'volumes': [
-                f'{media_volume_name}:/var/www/django/{self.project_name}_{self.docker_tag_slug}/media',
-                f'{static_volume_name}:/var/www/django/{self.project_name}_{self.docker_tag_slug}/static',
-                f'{logs_volume_name}:/var/www/django/{self.project_name}_{self.docker_tag_slug}/logs',
-            ],
+            'volumes': self.get_volumes_list(),
             'depends_on': ['django']
         }
 
     def gather_data(self):
+        self.define_volumes()
         self.add_database()
         self.add_project()
         self.add_webserver()
