@@ -13,7 +13,8 @@ build-staging-image:
     - echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" -f ./deploy/acnl_django/Dockerfile .
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:nginx" -f ./deploy/acnl_nginx/Dockerfile --build-arg SSL_DH_PARAMS=$DH_PARAMS .
+    - echo $DH_PARAMS
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:nginx" -f ./deploy/acnl_nginx/Dockerfile --build-arg SSL_DH_PARAMS="$DH_PARAMS" .
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
     - docker push "$CI_REGISTRY_IMAGE:nginx"
   only:
