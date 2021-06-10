@@ -25,6 +25,7 @@ class DockerCompose:
         self.database_service_name = 'postgres'
         self.project_service_name = 'django'
         self.webserver_service_name = 'nginx'
+        self.certbot_service_name = 'certbot'
 
         self.media_volume_name = f'{self.docker_tag_slug}_media_files'
         self.static_volume_name = f'{self.docker_tag_slug}_static_files'
@@ -35,7 +36,7 @@ class DockerCompose:
         self.media_files_root_path = f'{self.project_storage_path}/media'
         self.webserver_logs_path = f'{self.project_storage_path}/logs'
 
-    def define_volumes(self):
+    def add_volumes(self):
         self.volumes[self.media_volume_name] = None
         self.volumes[self.static_volume_name] = None
         self.volumes[self.logs_volume_name] = None
@@ -98,11 +99,24 @@ class DockerCompose:
             'depends_on': ['django']
         }
 
+    def add_certbot(self):
+        self.services[self.certbot_service_name] = {
+            'image': 'certbot/certbot',
+            'container_name': f'{self.project_name}_{self.certbot_service_name}',
+            'restart': 'unless-stopped',
+            'volumes': [
+                './data/certbot/conf:/etc/letsencrypt',
+                './data/certbot/www:/var/www/certbot',
+            ],
+            'entrypoint': "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'",
+        }
+
     def gather_data(self):
-        self.define_volumes()
+        self.add_volumes()
         self.add_database()
         self.add_project()
         self.add_webserver()
+        self.add_certbot()
 
     def render(self):
         data_yaml = yaml.dump({'version': self.version})
