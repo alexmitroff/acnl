@@ -81,9 +81,9 @@ class DockerCompose:
             'container_name': f'{self.project_name}_{self.webserver_service_name}',
             'ports': ['80:80'],
             'volumes': [
-                f'{media_volume_name}:/var/www/django/{self.project_name}/media',
-                f'{static_volume_name}:/var/www/django/{self.project_name}/static',
-                f'{logs_volume_name}:/var/www/django/{self.project_name}/logs',
+                f'{media_volume_name}:/var/www/django/{self.project_name}_{self.docker_tag_slug}/media',
+                f'{static_volume_name}:/var/www/django/{self.project_name}_{self.docker_tag_slug}/static',
+                f'{logs_volume_name}:/var/www/django/{self.project_name}_{self.docker_tag_slug}/logs',
             ],
             'depends_on': ['django']
         }
