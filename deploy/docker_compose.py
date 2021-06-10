@@ -70,15 +70,15 @@ class DockerCompose:
             'image': f'{self.docker_image_name}:{self.docker_tag_slug}',
             'container_name': f'{self.project_name}_{self.project_service_name}_{self.docker_tag_slug}',
             'ports': ['8000:8000'],
-            'environment': {
-                'DJANGO_SETTINGS_MODULE': 'acnl.settings.dev',
-                'DJANGO_DEBUG': 1,
-                'DJANGO_DB_NAME': f'{self.project_name}_db',
-                'DJANGO_DB_USER': self.project_db_user,
-                'DJANGO_DB_PASS': self.project_db_pass,
-                'STATIC_ROOT_PATH': f'{self.static_files_root_path}/',
-                'MEDIA_ROOT_PATH': f'{self.media_files_root_path}/',
-            },
+            'environment': [
+                'DJANGO_SETTINGS_MODULE:acnl.settings.dev',
+                'DJANGO_DEBUG:1',
+                f'DJANGO_DB_NAME:{self.project_name}_db',
+                f'DJANGO_DB_USER:{self.project_db_user}',
+                f'DJANGO_DB_PASS:{self.project_db_pass}',
+                f'STATIC_ROOT_PATH:{self.static_files_root_path}/',
+                f'MEDIA_ROOT_PATH:{self.media_files_root_path}/',
+            ],
             'command': 'sh ./deploy/acnl_django/prod-run.sh',
             'volumes': self.get_volumes_list(),
             'depends_on': ['postgres']
@@ -89,11 +89,11 @@ class DockerCompose:
             'image': f'{self.docker_image_name}:nginx',
             'container_name': f'{self.project_name}_{self.webserver_service_name}',
             'ports': ['80:80'],
-            'environment': {
-                'LOGS_PATH': self.webserver_logs_path,
-                'STATIC_ROOT_PATH': self.static_files_root_path,
-                'MEDIA_ROOT_PATH': self.media_files_root_path,
-            },
+            'environment': [
+                f'LOGS_PATH:{self.webserver_logs_path}',
+                f'STATIC_ROOT_PATH:{self.static_files_root_path}',
+                f'MEDIA_ROOT_PATH:{self.media_files_root_path}',
+            ],
             'volumes': self.get_volumes_list(),
             'depends_on': ['django']
         }
