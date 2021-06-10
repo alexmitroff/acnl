@@ -36,6 +36,9 @@ class DockerCompose:
         self.media_files_root_path = f'{self.project_storage_path}/media'
         self.webserver_logs_path = f'{self.project_storage_path}/logs'
 
+        self.certbot_conf_path = './data/certbot/conf:/etc/letsencrypt'
+        self.certbot_www_path = './data/certbot/www:/var/www/certbot'
+
     def add_volumes(self):
         self.volumes[self.media_volume_name] = None
         self.volumes[self.static_volume_name] = None
@@ -94,6 +97,8 @@ class DockerCompose:
                 f'LOGS_PATH={self.webserver_logs_path}',
                 f'STATIC_ROOT_PATH={self.static_files_root_path}',
                 f'MEDIA_ROOT_PATH={self.media_files_root_path}',
+                self.certbot_conf_path,
+                self.certbot_www_path,
             ],
             'volumes': self.get_volumes_list(),
             'depends_on': ['django']
@@ -105,8 +110,8 @@ class DockerCompose:
             'container_name': f'{self.project_name}_{self.certbot_service_name}',
             'restart': 'unless-stopped',
             'volumes': [
-                './data/certbot/conf:/etc/letsencrypt',
-                './data/certbot/www:/var/www/certbot',
+                self.certbot_conf_path,
+                self.certbot_www_path,
             ],
             'entrypoint': "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'",
         }
