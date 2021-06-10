@@ -15,6 +15,9 @@ class DockerCompose:
         self.postgres_pwd = postgres_pwd
         self.postgres_usr = postgres_usr
 
+        self.project_db_user = database_usr
+        self.project_db_pass = database_pwd
+
         self.project_name = project_name
         self.docker_image_name = docker_image_name
         self.docker_tag_slug = docker_tag_slug
