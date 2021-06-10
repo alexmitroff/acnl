@@ -97,12 +97,12 @@ class DockerCompose:
                 f'LOGS_PATH={self.webserver_logs_path}',
                 f'STATIC_ROOT_PATH={self.static_files_root_path}',
                 f'MEDIA_ROOT_PATH={self.media_files_root_path}',
-                self.certbot_conf_path,
-                self.certbot_www_path,
             ],
             'volumes': self.get_volumes_list(),
             'depends_on': ['django']
         }
+        self.services[self.webserver_service_name]['volumes'].append(self.certbot_conf_path)
+        self.services[self.webserver_service_name]['volumes'].append(self.certbot_www_path)
 
     def add_certbot(self):
         self.services[self.certbot_service_name] = {
