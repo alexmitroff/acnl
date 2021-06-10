@@ -53,7 +53,7 @@ class DockerCompose:
             'ports': ['8000:8000'],
             'environment': {
                 'DJANGO_SETTINGS_MODULE': 'acnl.settings.dev',
-                'DJANGO_DEBUG': True,
+                'DJANGO_DEBUG': 1,
                 'DJANGO_DB_NAME': f'{self.project_name}_db',
                 'DJANGO_DB_USER': self.project_db_user,
                 'DJANGO_DB_PASS': self.project_db_pass,

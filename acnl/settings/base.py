@@ -32,7 +32,7 @@ TEMPL_DIR = os.path.join(BASE_DIR, "templates")
 SECRET_KEY = '4ata+-g(1mlj-@2@4#2y!%h@er_66e%vc0x&8tixc)ioms@yl@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DJANGO_DEBUG", True)
+DEBUG = os.getenv("DJANGO_DEBUG", 1) == 1
 
 ALLOWED_HOSTS = []
 
