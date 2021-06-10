@@ -29,6 +29,8 @@ def run():
                                    docker_tag_slug=getattr(args, ARGUMENT_TAG),
                                    postgres_pwd=getattr(args, ARGUMENT_PGPWD),
                                    postgres_usr=getattr(args, ARGUMENT_PGUSER),
+                                   database_pwd=getattr(args, ARGUMENT_PJDBPWD),
+                                   database_usr=getattr(args, ARGUMENT_PJDBUSER),
                                    )
     docker_compose.gather_data()
     docker_compose.write_file(name='production.gen')
