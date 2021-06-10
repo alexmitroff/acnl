@@ -79,7 +79,7 @@ class DockerCompose:
                 'STATIC_ROOT_PATH': f'{self.static_files_root_path}/',
                 'MEDIA_ROOT_PATH': f'{self.media_files_root_path}/',
             },
-            'command': 'bash ./deploy/acnl_django/prod-run.bash',
+            'command': 'sh ./deploy/acnl_django/prod-run.sh',
             'volumes': self.get_volumes_list(),
             'depends_on': ['postgres']
         }
