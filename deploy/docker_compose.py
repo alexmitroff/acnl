@@ -92,6 +92,7 @@ class DockerCompose:
         self.services[self.webserver_service_name] = {
             'image': f'{self.docker_image_name}:nginx',
             'container_name': f'{self.project_name}_{self.webserver_service_name}',
+            'command': "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'",
             'ports': ['80:80'],
             'environment': [
                 f'LOGS_PATH={self.webserver_logs_path}',
