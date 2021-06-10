@@ -19,9 +19,9 @@ python manage.py compilesass
 python manage.py collectstatic --noinput
 
 echo "Checking media"
-if    ls -1qA /var/www/django/acnl/media | grep -q .
+if    ls -1qA $MEDIA_ROOT_PATH | grep -q .
 then  ! echo Media is not empty
-else  unzip ./units.zip -d /var/www/django/acnl/media
+else  unzip ./units.zip -d $MEDIA_ROOT_PATH
 fi
 
 gunicorn -w 4 acnl.wsgi -b 0.0.0.0:8000
