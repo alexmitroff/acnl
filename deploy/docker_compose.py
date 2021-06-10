@@ -59,10 +59,10 @@ class DockerCompose:
             'container_name': f'{self.project_name}_{self.database_service_name}',
             'ports': ["54320:5432"],
             'volumes': [f'{db_volume_name}:/var/lib/postgresql/data'],
-            'environment': {
-                'POSTGRES_PASSWORD': self.postgres_pwd,
-                'POSTGRES_USER': self.postgres_usr,
-            }
+            'environment': [
+                f'POSTGRES_PASSWORD={self.postgres_pwd}',
+                f'POSTGRES_USER={self.postgres_usr}',
+            ]
         }
 
     def add_project(self):
@@ -71,13 +71,13 @@ class DockerCompose:
             'container_name': f'{self.project_name}_{self.project_service_name}_{self.docker_tag_slug}',
             'ports': ['8000:8000'],
             'environment': [
-                'DJANGO_SETTINGS_MODULE:acnl.settings.dev',
-                'DJANGO_DEBUG:1',
-                f'DJANGO_DB_NAME:{self.project_name}_db',
-                f'DJANGO_DB_USER:{self.project_db_user}',
-                f'DJANGO_DB_PASS:{self.project_db_pass}',
-                f'STATIC_ROOT_PATH:{self.static_files_root_path}/',
-                f'MEDIA_ROOT_PATH:{self.media_files_root_path}/',
+                'DJANGO_SETTINGS_MODULE=acnl.settings.dev',
+                'DJANGO_DEBUG=1',
+                f'DJANGO_DB_NAME={self.project_name}_db',
+                f'DJANGO_DB_USER={self.project_db_user}',
+                f'DJANGO_DB_PASS={self.project_db_pass}',
+                f'STATIC_ROOT_PATH={self.static_files_root_path}/',
+                f'MEDIA_ROOT_PATH={self.media_files_root_path}/',
             ],
             'command': 'sh ./deploy/acnl_django/prod-run.sh',
             'volumes': self.get_volumes_list(),
@@ -90,9 +90,9 @@ class DockerCompose:
             'container_name': f'{self.project_name}_{self.webserver_service_name}',
             'ports': ['80:80'],
             'environment': [
-                f'LOGS_PATH:{self.webserver_logs_path}',
-                f'STATIC_ROOT_PATH:{self.static_files_root_path}',
-                f'MEDIA_ROOT_PATH:{self.media_files_root_path}',
+                f'LOGS_PATH={self.webserver_logs_path}',
+                f'STATIC_ROOT_PATH={self.static_files_root_path}',
+                f'MEDIA_ROOT_PATH={self.media_files_root_path}',
             ],
             'volumes': self.get_volumes_list(),
             'depends_on': ['django']
