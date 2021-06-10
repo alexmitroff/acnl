@@ -4,6 +4,7 @@ import yaml
 class DockerCompose:
     def __init__(self,
                  postgres_pwd, postgres_usr,
+                 database_pwd, database_usr,
                  version='3', project_name='acnl',
                  docker_image_name='acnl', docker_tag_slug='test'
                  ):
@@ -49,6 +50,12 @@ class DockerCompose:
             'ports': ['8000:8000'],
             'environment': {
                 'DJANGO_SETTINGS_MODULE': 'acnl.settings.dev',
+                'DJANGO_DEBUG': True,
+                'DJANGO_DB_NAME': f'{self.project_name}_db',
+                'DJANGO_DB_USER': self.project_db_user,
+                'DJANGO_DB_PASS': self.project_db_pass,
+                'STATIC_ROOT_PATH': f'/var/www/django/{self.project_name}_{self.docker_tag_slug}/static/',
+                'MEDIA_ROOT_PATH': f'/var/www/django/{self.project_name}_{self.docker_tag_slug}/media/',
             },
             'command': 'bash ./deploy/acnl_django/prod-run.bash',
             'volumes': [

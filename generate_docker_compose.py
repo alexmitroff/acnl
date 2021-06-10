@@ -7,7 +7,8 @@ ARGUMENT_IMAGE = 'image'
 ARGUMENT_TAG = 'tag'
 ARGUMENT_PGUSER = 'pguser'
 ARGUMENT_PGPWD = 'pgpwd'
-
+ARGUMENT_PJDBUSER = 'pjdbuser'
+ARGUMENT_PJDBPWD = 'pjdbpwd'
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='Sends message, video or image to telegram channel')
@@ -16,6 +17,8 @@ def get_arguments():
     parser.add_argument(f'-{ARGUMENT_TAG[0]}', f'--{ARGUMENT_TAG}', required=True, help='Docker image tag')
     parser.add_argument(f'--{ARGUMENT_PGUSER}', required=True, help='PostgreSQL user')
     parser.add_argument(f'--{ARGUMENT_PGPWD}', required=True, help='PostgreSQL password')
+    parser.add_argument(f'--{ARGUMENT_PJDBUSER}', required=True, help='Database user')
+    parser.add_argument(f'--{ARGUMENT_PJDBPWD}', required=True, help='Database password')
     return parser.parse_args()
 
 

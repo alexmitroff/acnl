@@ -32,7 +32,7 @@ TEMPL_DIR = os.path.join(BASE_DIR, "templates")
 SECRET_KEY = '4ata+-g(1mlj-@2@4#2y!%h@er_66e%vc0x&8tixc)ioms@yl@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUG", True)
 
 ALLOWED_HOSTS = []
 
@@ -101,6 +101,18 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("DJANGO_DB_NAME", None),
+        'USER': os.getenv("DJANGO_DB_USER", None),
+        'PASSWORD': os.getenv("DJANGO_DB_PASS", None),
+        'HOST': 'postgres',
+        'PORT': '5432',
+        }
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -120,6 +132,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (STAT_DIR,)
+STATIC_ROOT = os.getenv("STATIC_ROOT_PATH", None)
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = "/var/www/django/acnl/media"
+MEDIA_ROOT = os.getenv("MEDIA_ROOT_PATH", None)
