@@ -89,6 +89,11 @@ class DockerCompose:
             'image': f'{self.docker_image_name}:nginx',
             'container_name': f'{self.project_name}_{self.webserver_service_name}',
             'ports': ['80:80'],
+            'environment': {
+                'LOGS_PATH': self.webserver_logs_path,
+                'STATIC_ROOT_PATH': self.static_files_root_path,
+                'MEDIA_ROOT_PATH': self.media_files_root_path,
+            },
             'volumes': self.get_volumes_list(),
             'depends_on': ['django']
         }
