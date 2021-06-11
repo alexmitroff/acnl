@@ -27,8 +27,8 @@ class DockerCompose:
         self.webserver_service_name = 'nginx'
         self.certbot_service_name = 'certbot'
 
-        self.media_volume_name = f'{self.docker_tag_slug}_media_files'
-        self.static_volume_name = f'{self.docker_tag_slug}_static_files'
+        self.media_volume_name = f'production_media_files'
+        self.static_volume_name = f'production_static_files'
         self.logs_volume_name = 'log_files'
 
         self.project_storage_path = f'/var/www/django/{self.project_name}_{self.docker_tag_slug}'
@@ -77,6 +77,7 @@ class DockerCompose:
             'environment': [
                 'DJANGO_SETTINGS_MODULE=acnl.settings.dev',
                 'DJANGO_DEBUG=1',
+                f'PROJECT_VERSION:{self.docker_tag_slug}',
                 f'DJANGO_DB_NAME={self.project_name}_db',
                 f'DJANGO_DB_USER={self.project_db_user}',
                 f'DJANGO_DB_PASS={self.project_db_pass}',
