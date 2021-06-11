@@ -31,7 +31,7 @@ class DockerCompose:
         self.static_volume_name = f'production_static_files'
         self.logs_volume_name = 'log_files'
 
-        self.project_storage_path = f'/var/www/django/{self.project_name}_{self.docker_tag_slug}'
+        self.project_storage_path = f'/var/www/django/{self.project_name}_production'
         self.static_files_root_path = f'{self.project_storage_path}/static'
         self.media_files_root_path = f'{self.project_storage_path}/media'
         self.webserver_logs_path = f'{self.project_storage_path}/logs'
