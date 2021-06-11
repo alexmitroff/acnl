@@ -77,7 +77,8 @@ class DockerCompose:
             'environment': [
                 'DJANGO_SETTINGS_MODULE=acnl.settings.dev',
                 'DJANGO_DEBUG=1',
-                f'PROJECT_VERSION:{self.docker_tag_slug}',
+                f'PROJECT_VERSION={self.docker_tag_slug}',
+                f'DJANGO_DB_HOST={self.database_service_name}',
                 f'DJANGO_DB_NAME={self.project_name}_db',
                 f'DJANGO_DB_USER={self.project_db_user}',
                 f'DJANGO_DB_PASS={self.project_db_pass}',
