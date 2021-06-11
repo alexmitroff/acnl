@@ -75,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'acnl.core.context_processors.project_info',
             ],
         },
     },
@@ -136,3 +137,5 @@ STATIC_ROOT = os.getenv("STATIC_ROOT_PATH", None)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.getenv("MEDIA_ROOT_PATH", None)
+
+PROJECT_VERSION = os.getenv("PROJECT_VERSION", "unknown")
