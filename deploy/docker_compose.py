@@ -30,11 +30,13 @@ class DockerCompose:
         self.media_volume_name = f'production_media_files'
         self.static_volume_name = f'production_static_files'
         self.logs_volume_name = 'log_files'
+        self.tmp_volume_name = 'tmp_files'
 
         self.project_storage_path = f'/var/www/django/{self.project_name}_production'
         self.static_files_root_path = f'{self.project_storage_path}/static'
         self.media_files_root_path = f'{self.project_storage_path}/media'
         self.webserver_logs_path = f'{self.project_storage_path}/logs'
+        self.tmp_path = '/tmp'
 
         self.certbot_conf_path = './data/certbot/conf:/etc/letsencrypt'
         self.certbot_www_path = './data/certbot/www:/var/www/certbot'
@@ -43,12 +45,14 @@ class DockerCompose:
         self.volumes[self.media_volume_name] = None
         self.volumes[self.static_volume_name] = None
         self.volumes[self.logs_volume_name] = None
+        self.volumes[self.tmp_volume_name] = None
 
     def get_volumes(self):
         return {
             self.media_volume_name: self.media_files_root_path,
             self.static_volume_name: self.static_files_root_path,
             self.logs_volume_name: self.webserver_logs_path,
+            self.tmp_volume_name: self.tmp_path,
         }
 
     def get_volumes_list(self):
