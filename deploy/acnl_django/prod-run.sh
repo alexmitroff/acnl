@@ -24,4 +24,4 @@ then  ! echo Media is not empty
 else  unzip ./units.zip -d $MEDIA_ROOT_PATH
 fi
 
-gunicorn -w 4 acnl.wsgi -b 0.0.0.0:8000
+gunicorn -w 4 acnl.wsgi -b unix:/tmp/gunicorn.sock
