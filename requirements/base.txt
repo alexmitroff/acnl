@@ -1,0 +1,14 @@
+# Framework
+Django==2.2.28
+django-polymorphic==3.1.0
+django-rest-polymorphic==0.1.9
+djangorestframework==3.12.2
+
+# Compile SCSS
+libsass==0.23.0
+
+# Images
+Pillow==10.4.0
+
+# Access database
+psycopg2-binary==2.9.9

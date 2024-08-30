@@ -1,0 +1,28 @@
+volumes:
+  dbdata:
+
+services:
+  django:
+    container_name: acnl_local_django
+    build:
+      context: .
+      dockerfile: ./deploy/django/local_Dockerfile
+    depends_on:
+      - postgres
+    volumes:
+      - .:/acnl
+      - ${HOME_STORAGE_PATH}:${VOLUME_PATH}
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    command: /start
+    user: "${UID}:${GID}"
+
+  postgres:
+    container_name: acnl_local_postgres
+    env_file:
+      - ./.env
+    image: postgres:11
+    volumes:
+    - dbdata:/var/lib/postgresql/data

@@ -1,0 +1,5 @@
+# Import requirements from base
+-r ./base.txt
+
+# Server run
+gunicorn==20.1.0

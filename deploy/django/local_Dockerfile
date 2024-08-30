@@ -1,0 +1,41 @@
+FROM python:3.8-slim
+
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
+
+ARG USERNAME=developer
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+
+RUN apt-get update \
+  # dependencies for building Python packages
+  && apt-get install -y build-essential \
+  # ssh
+  && apt-get install -y openssh-client \
+  # git
+  && apt-get install -y git \
+  # psycopg2 dependencies
+  && apt-get install -y libpq-dev \
+  # Translations dependencies
+  && apt-get install -y gettext \
+  # cleaning up unused files
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/*
+
+# Requirements are installed here to ensure they will be cached.
+COPY ./requirements /requirements
+RUN pip install -r /requirements/dev.txt
+
+RUN mkdir -p /home/$USERNAME/django/
+RUN chown -R $USERNAME:$USERNAME /home/$USERNAME/django/
+
+COPY ./deploy/django/dev-run.bash /start
+RUN sed -i 's/\r$//g' /start
+RUN chmod +x /start
+
+WORKDIR /acnl
+
+USER $USERNAME
