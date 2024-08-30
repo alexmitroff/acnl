@@ -2,15 +2,18 @@
 This is simple django project which I use to learn markup, caching, REST & etc.
 
 **Table of content**
-- [Local deploy without docker-compose](#local-deploy-without-docker-compose)
-  - [Create python env and clone project](#create-python-env-and-clone-project)
-  - [Restore database from sql backup](#restore-database-from-sql-backup)
-  - [Install requirements, compile styles and run development server ](#install-requirements-compile-styles-and-run-development-server )
-- [Local deploy with docker-compose](#local-deploy-with-docker-compose)
-  - [Restore database from sql backup](#restore-database-from-sql-backup-2)
+- [Animal Crossing New Leaf Encyclopedia](#animal-crossing-new-leaf-encyclopedia)
+  - [Local deploy without `docker`](#local-deploy-without-docker)
+    - [Create python env and clone project](#create-python-env-and-clone-project)
+    - [Restore database from sql backup](#restore-database-from-sql-backup)
+    - [Install requirements, compile styles and run development server](#install-requirements-compile-styles-and-run-development-server)
+  - [Local deploy with `docker compose`](#local-deploy-with-docker-compose)
+    - [Restore database from sql backup](#restore-database-from-sql-backup-1)
+    - [Run development server](#run-development-server)
+    - [Run production server](#run-production-server)
 
 
-## Local deploy without docker-compose
+## Local deploy without `docker`
 
 ### Create python env and clone project
 ```bash
@@ -29,9 +32,10 @@ su - postgres
 # enter the postgres shell
 psql
 # in postgres shell:
-create database acnl_db;
-create user acnl with password 'password1234';
-grant all privileges on database acnl_db to acnl;
+CREATE DATABASE acnl_db;
+CREATE USER acnl WITH PASSWORD 'password1234';
+GRANT ALL PRIVILEGES ON DATABASE acnl_db TO acnl;
+ALTER DATABASE acnl_db OWNER TO acnl;
 \q # or Ctrl+d
 # restore from sql file
 psql acnl < ./acnl/database.sql
@@ -59,7 +63,7 @@ python manage.py compilesass # it will generate /static/css/acnl.gen.css (minimi
 python manage.py runserver 0.0.0.0:8000
 ```
 
-## Local deploy with docker-compose
+## Local deploy with `docker compose`
 
 ### Restore database from sql backup
 part of docker-compose:
@@ -78,18 +82,19 @@ volumes:
 ```
 terminal:
 ```bash
-docker-compose up -d
+docker-compose -f local.yml up
 # enter the postgres shell
 docker exec -it acnl_postgres psql -U postgres
 
 # in postgres shell:
-create database acnl_db;
-create user acnl with password 'password1234';
-grant all privileges on database acnl_db to acnl;
+CREATE DATABASE acnl_db;
+CREATE USER acnl WITH PASSWORD 'password1234';
+GRANT ALL PRIVILEGES ON DATABASE acnl_db TO acnl;
+ALTER DATABASE acnl_db OWNER TO acnl;
 \q # or Ctrl+d
 
 # restore from sql file
-cat ./database.sql | sudo docker exec -i acnl_postgres psql -U acnl -d acnl_db
+cat ./database.sql | docker exec -i acnl_postgres psql -U acnl -d acnl_db
 docker-compose down
 ```
 settings.py:
@@ -108,7 +113,7 @@ DATABASES = {
 
 ### Run development server
 ```bash
-docker-compose up
+docker compose -f local.yml up
 ```
 
 ### Run production server
@@ -135,5 +140,5 @@ STATIC_ROOT = "/var/www/django/acnl/static"
 MEDIA_ROOT = "/var/www/django/acnl/media"
 ```
 ```bash
-docker-compose -f prodaction.yaml up
+docker compose -f prodaction.yaml up
 ```
