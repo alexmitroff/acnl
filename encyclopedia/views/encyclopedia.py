@@ -9,7 +9,8 @@ class EncyclopediaView(EncyclopediaBase):
     def get(self, request):
         sections = []
         for section in self.get_shown_sections():
-            creatures = section.creature_set.all().select_related('rarity')
+            creatures = self.get_creatures_from_section(section).select_related('rarity')
+            creatures = self.annotate_creatures(creatures)
             creatures_paginator = self.get_creature_paginator(creatures)
             page = 1
             creatures_page = creatures_paginator.page(page)

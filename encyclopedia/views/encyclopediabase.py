@@ -1,9 +1,10 @@
+from django.db.models import Count, Q
 from django.core.paginator import Paginator
 from django.views import View
 
 from creatures.models.creature import Creature
 from creatures.models.section import Section
-from encyclopedia.core.func import get_current_month_number
+from encyclopedia.core.month import month
 from encyclopedia.models import Month
 
 
@@ -29,7 +30,7 @@ class EncyclopediaBase(View):
         return Month.objects.get(pos=position)
 
     def get_current_month(self):
-        return self.get_month_by_position(get_current_month_number())
+        return self.get_month_by_position(month.current)
 
     @staticmethod
     def get_creatures_by_month_number(position):
@@ -41,15 +42,23 @@ class EncyclopediaBase(View):
 
     @staticmethod
     def get_creatures_from_section(section):
-        return section.creature_set.all().order_by('pos').prefetch_related('months')
+        return section.creature_set.all().order_by('position')
 
     @staticmethod
     def get_available_creatures_in_section(section):
-        return section.creature_set.filter(months__pos=get_current_month_number())
+        return section.creature_set.filter(months__pos=month.current)
+
+    @staticmethod
+    def annotate_creatures(queryset):
+        return queryset.annotate(
+            is_available_this_month=Count('months', filter=Q(months__pos=month.current)),
+            will_be_in_next_month=Count('months', filter=Q(months__pos=month.next)),
+            was_in_previous_month=Count('months', filter=Q(months__pos=month.previous)),
+        )
 
     @staticmethod
     def is_last_month(creature):
-        current_month = get_current_month_number()
+        current_month = month.current
         next_month = current_month + 1 if current_month < 12 else 1
         if not creature.months.filter(pos=current_month).exists():
             return False
@@ -58,7 +67,7 @@ class EncyclopediaBase(View):
 
     @staticmethod
     def is_first_month(creature):
-        current_month = get_current_month_number()
+        current_month = month.current
         prev_month = current_month - 1 if current_month > 1 else 12
         if not creature.months.filter(pos=current_month).exists():
             return False
@@ -68,27 +77,21 @@ class EncyclopediaBase(View):
     def get_all_available_creatures_by_section(self, sections):
         result = []
         for section in sections:
-            available_creatures = list(self.get_available_creatures_in_section(section))
-            new_creatures = []
-            old_creatures = []
-            for creature in available_creatures:
-                if self.is_first_month(creature):
-                    creature.banner = 'new'
-                    new_creatures.append(creature)
-                else:
-                    old_creatures.append(creature)
+            available_creatures = self.get_available_creatures_in_section(section)
+            available_creatures = self.annotate_creatures(available_creatures)
 
             result.append({
                 'name': section.name,
-                'creatures': new_creatures+old_creatures,
+                'creatures': available_creatures,
             })
         return result
 
     def get_all_last_chance_creatures_list_by_section(self, sections):
         result = []
         for section in sections:
-            available_creatures = list(self.get_available_creatures_in_section(section))
-            last_chance_creatures = [creature for creature in available_creatures if self.is_last_month(creature)]
+            available_creatures = self.get_available_creatures_in_section(section)
+            available_creatures = self.annotate_creatures(available_creatures)
+            last_chance_creatures = available_creatures.filter(will_be_in_next_month__lt=1)
             result.append({
                 'name': section.name,
                 'creatures': last_chance_creatures

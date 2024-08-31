@@ -1,16 +1,3 @@
-from datetime import datetime
-
-
-def get_current_month_name():
-    d = datetime.now()
-    return d.strftime("%B")
-
-
-def get_current_month_number():
-    d = datetime.now()
-    return d.month
-
-
 def slice_creatures_from_section(section, page=1, per_page=18):
     start_slice = per_page * (page - 1)
     end_slice = per_page * page
