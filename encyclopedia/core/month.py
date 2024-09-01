@@ -20,5 +20,9 @@ class Month:
     def previous(self):
         return self.current - 1 if self.current > 1 else 12
 
+    @staticmethod
+    def get_name(date):
+        return date.strftime("%B")
+
 
 month = Month()

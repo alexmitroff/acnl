@@ -1,3 +1,4 @@
+from creatures.models.animal import Animal
 from creatures.models.bug import BugType, Bug
 from creatures.models.creature import Creature
 from creatures.models.deepsea import DeepSea
