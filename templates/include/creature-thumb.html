@@ -4,7 +4,7 @@
         <img class="creature-preview-pic"
              style="border-color: {{ creature.rarity.hsl_color }}"
              src="{{ creature.picture_url }}" alt="{{ creature.name }} in New Leaf">
-        {% if creature.banner %}
+        {% if not creature.was_in_previous_month and creature.is_available_this_month %}
         <div class="creature-banner">new</div>
         {% endif %}
     </div>
