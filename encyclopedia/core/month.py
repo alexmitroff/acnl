@@ -1,4 +1,4 @@
-from datetime import datetime
+from django.utils import timezone
 
 
 __all__ = (
@@ -10,7 +10,7 @@ class Month:
 
     @property
     def current(self):
-        return datetime.now().month
+        return timezone.now().month
 
     @property
     def next(self):
