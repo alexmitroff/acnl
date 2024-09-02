@@ -1,19 +1,26 @@
-from django.shortcuts import render
+from django.utils import timezone
+from django.views.generic import TemplateView
 
-from encyclopedia.views.encyclopediabase import EncyclopediaBase
+from creatures.models.section import Section
+from encyclopedia.core.month import month
 
 
-class LastChanceUnitsView(EncyclopediaBase):
+class LastChanceUnitsView(TemplateView):
+    template_name = 'pages/creatures.html'
 
-    def get(self, request):
-        sections = self.get_shown_sections()
-        sections = self.get_all_last_chance_creatures_list_by_section(sections)
-        mon = self.get_current_month()
-        context = {
-            'sections': sections,
+    def get_context_data(self, **kwargs):
+        sections = Section.objects.all().order_by('pos')
+        for section in sections:
+            section.creatures = section.animal_set.filter(
+                will_be_in_next_month__lt=1,
+                is_available_this_month__gt=0,
+            ).order_by('was_in_previous_month', 'position')
+
+        mon = month.get_name(timezone.now())
+        context =  super().get_context_data(**kwargs)
+        context.update({
             'mon': mon,
-            # Additional #
             'page_title': f'{mon} last chance',
-            'meta_description': ''
-        }
-        return render(request, 'pages/creatures.html', context)
+            'sections': sections,
+        })
+        return context
