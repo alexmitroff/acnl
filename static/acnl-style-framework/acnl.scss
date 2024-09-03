@@ -24,7 +24,7 @@ $big-screen: px-rem($big-bp);
 $big-screen-max: px-rem($large-bp - 1);
 $large-screen: px-rem($large-bp);
 
-$transition: all .2s ease-in 0s;
+$transition: all .2s ease 0s;
 
 /* Proportions */
 $proportion-16x9: ( 9 / 16 ) * 100%;
@@ -74,7 +74,7 @@ body{
 
 a,
 button{
-  transition: all .2s ease 0s;
+  transition: $transition
 }
 
 /* IMPORTS */

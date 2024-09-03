@@ -3,23 +3,30 @@
   > p{
     text-align: center;
   }
+  &:hover{
+    img{
+      transform: scale(1.25);
+    }
+  }
 }
 
 .creature-preview{
   display:block;
   position: relative;
-  padding-top: 100%;
   &-pic{
-    display:block;
-    position: absolute;
-    left:0;
-    top:0;
-    height: 100%;
-    width: 100%;
-    background-color: $ac_gray;
     border: $border;
     border-radius: 50%;
+    width: 100%;
     overflow: hidden;
+    > img{
+      display:block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background-color: $ac_gray;
+      object-fit: cover;
+      object-position: center;
+      transition: $transition;
+    }
   }
 }
 
