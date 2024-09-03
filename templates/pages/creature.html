@@ -45,6 +45,7 @@
                     {% for month in months %}
                         <li class="{{ month.season.name }}
                         {% if month.is_active %}active{% endif %}
+                        {% if month.pos == mon_num %}current{% endif %}
                         " {% if month.is_active %}style="background-color: {{ month.season.hsl_color }}"{% endif %}>
                             {{ month.name|slice:":3" }}</li>
                     {% endfor %}
