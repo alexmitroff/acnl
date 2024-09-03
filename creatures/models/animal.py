@@ -72,3 +72,13 @@ class Animal(models.Model):
     @property
     def url(self):
         return reverse('creatures:creature', kwargs={'section_slug': self.section.slug, 'creature_slug': self.slug})
+
+    @property
+    def next(self):
+        return Animal.objects.filter(section__slug=self.section.slug,
+                                     position__gt=self.position).order_by('position').first()
+
+    @property
+    def prev(self):
+        return Animal.objects.filter(section__slug=self.section.slug,
+                                     position__lt=self.position).order_by('position').last()

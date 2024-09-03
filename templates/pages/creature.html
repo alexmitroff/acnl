@@ -32,9 +32,7 @@
                 <ul>
                     <li><b>Rarity:</b>
                         <span style="color: {{ creature.rarity.hsl_color }}">
-                        {% for star in rarity_range %}
-                            &starf;
-                        {% endfor %}
+                            {{ creature.rarity.as_stars }}
                         </span>
                     </li>
                     <li><b>Location:</b> {{creature.location }}</li>
