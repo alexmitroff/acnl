@@ -1,39 +1,48 @@
-from django.shortcuts import render
 
-from encyclopedia.core.func import slice_creatures_from_section
-from encyclopedia.views.encyclopediabase import EncyclopediaBase
+from django.core.paginator import Paginator
+from django.utils import timezone
+from django.views.generic import TemplateView
+
+from creatures.models.section import Section
+from encyclopedia.core.month import month
 
 
-class EncyclopediaView(EncyclopediaBase):
+DEFAULT_SLICE = 18
 
-    def get(self, request):
-        sections = []
-        for section in self.get_shown_sections():
-            creatures = self.get_creatures_from_section(section).select_related('rarity')
-            creatures = self.annotate_creatures(creatures)
-            creatures_paginator = self.get_creature_paginator(creatures)
-            page = 1
-            creatures_page = creatures_paginator.page(page)
-            section_data = {
-                'name': section.name,
-                'slug': section.slug,
-                'creatures': creatures_page,
-                'page_range': creatures_paginator.page_range,
-                'current_page': page,
-                'page_count': creatures_paginator.count
-            }
-            if creatures_page.has_next():
-                section_data['next_page'] = creatures_page.next_page_number()
-            if creatures_page.has_previous():
-                section_data['prev_page'] = creatures_page.previous_page_number()
 
-            sections.append(section_data)
+class EncyclopediaView(TemplateView):
+    template_name = 'pages/encyclopedia.html'
 
-        context = {
+    def get_context_data(self, **kwargs):
+        sections = Section.objects.all().order_by('pos')
+        for section in sections:
+            creatures = section.animal_set.all().order_by('position')
+            paginator = Paginator(creatures, per_page=DEFAULT_SLICE)
+            section.creatures = paginator.page(1)
+
+        context =  super().get_context_data(**kwargs)
+        context.update({
             'sections': sections,
-            'mon': self.get_current_month(),
+            'mon': month.get_name(timezone.now()),
             # Additional #
             'page_title': 'Encyclopedia',
             'meta_description': ''
-        }
-        return render(request, 'pages/encyclopedia.html', context)
+        })
+        return context
+
+
+class EncyclopediaPageView(TemplateView):
+    template_name = 'include/creature-pagination.html'
+
+    def get_context_data(self, **kwargs):
+        section = Section.objects.get(pk=self.kwargs['pk'])
+        creatures = section.animal_set.all().order_by('position')
+        paginator = Paginator(creatures, per_page=DEFAULT_SLICE)
+
+        context =  super().get_context_data(**kwargs)
+        context.update({
+            'section_pk': section.pk,
+            'section_slug': section.slug,
+            'creatures': paginator.page(self.kwargs['page']),
+        })
+        return context

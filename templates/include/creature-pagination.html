@@ -1,0 +1,36 @@
+
+<section class="grid-fluid">
+{% include 'include/creature-thumb.html' %}
+</section>
+
+{% if creatures.paginator.page_range %}
+<ul class="encyclopedia-pagination"
+        hx-trigger="click"
+        hx-target="#id_{{ section_slug }}"
+        hx-swap="innerHTML"
+>
+
+{% if creatures.has_previous %}
+    <li><button type="button"
+         class="pagination-nav-arrow"
+         hx-get="{% url 'encyclopedia:page' pk=section_pk page=creatures.previous_page_number %}"
+         >&larr;</button></li>
+{% endif %}
+
+{% for page_number in creatures.paginator.page_range %}
+    <li><button type="button"
+         {% if creatures.number == page_number %}
+         class="active"
+         {% endif %}
+         hx-get="{% url 'encyclopedia:page' pk=section_pk page=page_number %}"
+        >&bullet;</button></li>
+{% endfor %}
+
+{% if creatures.has_next %}
+    <li><button type="button"
+         hx-get="{% url 'encyclopedia:page' pk=section_pk page=creatures.next_page_number %}"
+         class="pagination-nav-arrow"
+         >&rarr;</button></li>
+{% endif %}
+</ul>
+{% endif %}
