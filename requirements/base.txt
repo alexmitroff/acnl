@@ -8,7 +8,7 @@ djangorestframework==3.12.2
 libsass==0.23.0
 
 # Images
-Pillow==10.4.0
+Pillow==13.0.0
 
 # Access database
 psycopg2-binary==2.9.9
